@@ -8,6 +8,9 @@ class Container {
     }
 
     async save(obj) {
+        if(!obj || !obj.title || !obj.price || !obj.thumbnail){
+            throw new Error("Objeto Invalido");
+        }
         const list = await this.getAll();
         list.push({...obj,id:(list?.at(-1)?.id ?? 0) + 1});
         await this.#write(list);
@@ -21,8 +24,8 @@ class Container {
 
     async getAll() {
         try {
-            const file = await fs.promises.readFile(this.#fileName)
-            return JSON.parse(file.toString());
+            const file = await fs.promises.readFile(this.#fileName, 'utf-8')
+            return JSON.parse(file);
         }catch (err){
             if(err.code === "ENOENT"){
                 await this.#write([]);
@@ -44,13 +47,11 @@ class Container {
     }
 
     async deleteAll() {
-        const list = await this.getAll();
-        list.length = 0;
-        await this.#write(list);
+        await this.#write([]);
     }
 
     async #write(list) {
-        await fs.promises.writeFile(this.#fileName, JSON.stringify(list));
+        await fs.promises.writeFile(this.#fileName, JSON.stringify(list,null,'\t'));
     }
 }
 
