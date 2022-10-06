@@ -21,5 +21,8 @@
   "homepage": "https://github.com/ahierro/programacion-backend-coder#readme",
   "devDependencies": {
     "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
   }
 }
