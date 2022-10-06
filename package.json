@@ -1,0 +1,25 @@
+{
+  "name": "programacion-backend-coder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahierro/programacion-backend-coder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahierro/programacion-backend-coder/issues"
+  },
+  "homepage": "https://github.com/ahierro/programacion-backend-coder#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

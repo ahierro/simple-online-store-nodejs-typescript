@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-class Container {
+class Index {
     #fileName;
 
     constructor(filename) {
@@ -12,7 +12,7 @@ class Container {
             throw new Error("Objeto Invalido");
         }
         const list = await this.getAll();
-        list.push({...obj,id:(list?.at(-1)?.id ?? 0) + 1});
+        list?.push({...obj,id:(list?.at(-1)?.id ?? 0) + 1});
         await this.#write(list);
         return obj.id;
     }
@@ -38,7 +38,7 @@ class Container {
 
     async deleteById(id) {
         const list = await this.getAll();
-        const index = list.findIndex(obj => obj.id === id);
+        const index = list?.findIndex(obj => obj.id === id);
         if(index<0){
             throw new Error("Id no encontrado");
         }
@@ -57,7 +57,7 @@ class Container {
 
 (async () => {
     try {
-        const container = new Container();
+        const container = new Index();
         const escuadra = {
                 title: 'Escuadra',
                 price: 123.45,
