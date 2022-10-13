@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "programacion-backend-coder",
   "version": "1.0.0",
   "description": "",
@@ -28,6 +27,7 @@
   },
   "dependencies": {
     "express": "^4.18.1",
-    "lodash": "^4.17.21"
+    "express-async-errors": "^3.1.1",
+    "uuid": "^9.0.0"
   }
 }
