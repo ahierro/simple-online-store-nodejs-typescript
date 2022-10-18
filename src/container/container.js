@@ -1,25 +1,43 @@
-const fs = require('fs');
 const {v4: uuidv4} = require('uuid');
 require('express-async-errors');
 const ApiError = require('../exceptions/ApiError');
 
 module.exports = class Container {
-    #fileName;
+    #list = [
+        {
+            "title": "Escuadra",
+            "price": 123.45,
+            "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+            "id": "faab7381-85cb-4f41-b158-49a13a56953b"
+        },
+        {
+            "title": "Calculadora",
+            "price": 234.56,
+            "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+            "id": "4daeba96-e2b0-4eb0-a6c7-258fe968d298"
+        },
+        {
+            "title": "Globo Terráqueo",
+            "price": 345.67,
+            "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+            "id": "952f507b-b427-48c7-9742-14d91da11bf2"
+        }
+    ];
 
     constructor(filename) {
-        this.#fileName = filename ?? "productos.json";
     }
+
     validate(obj){
         if(!obj || !obj.title || !obj.price || !obj.thumbnail){
             throw new ApiError({status:400,message:"Objeto Invalido. No tiene los campos requeridos"});
         }
     }
+
     async insert(obj) {
         this.validate(obj);
         const list = await this.getAll();
         const newObj = {...obj,id:uuidv4()};
         list?.push(newObj);
-        await this.#write(list);
         return newObj;
     }
 
@@ -34,7 +52,6 @@ module.exports = class Container {
             throw new ApiError({status:404,message:"Producto no encontrado"});
         }
         list[index] = {...obj,id};
-        await this.#write(list);
         return list[index];
     }
 
@@ -48,17 +65,7 @@ module.exports = class Container {
     }
 
     async getAll() {
-        try {
-            const file = await fs.promises.readFile(this.#fileName, 'utf-8')
-            return JSON.parse(file);
-        }catch (err){
-            if(err.code === "ENOENT"){
-                await this.#write([]);
-                return [];
-            }else{
-                throw err;
-            }
-        }
+        return Promise.resolve(this.#list);
     }
 
     async deleteById(id) {
@@ -68,14 +75,6 @@ module.exports = class Container {
             throw new ApiError({status:404,message:"Producto no encontrado"});
         }
         list.splice(index, 1);
-        await this.#write(list);
     }
 
-    async deleteAll() {
-        await this.#write([]);
-    }
-
-    async #write(list) {
-        await fs.promises.writeFile(this.#fileName, JSON.stringify(list,null,'\t'));
-    }
 }
