@@ -1,12 +1,17 @@
 const express = require("express");
 const mainRouter = require("../routes");
 const ApiError = require("../exceptions/ApiError");
+const path = require('path');
+
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', mainRouter);
+app.set('view engine', 'ejs');
+app.set('views', path.resolve(__dirname, '../../views'));
+
+app.use('/', mainRouter);
 app.use(express.static('public'));
 
 // MiddleWare for Error handling
