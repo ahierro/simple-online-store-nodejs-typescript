@@ -2,6 +2,7 @@ const express = require("express");
 const mainRouter = require("../routes");
 const ApiError = require("../exceptions/ApiError");
 const path = require('path');
+const http = require('http');
 
 const app = express();
 
@@ -27,5 +28,6 @@ app.use((err, req, res, next) => {
         });
     }
 });
+const server = http.Server(app);
 
-module.exports = app;
+module.exports = server;

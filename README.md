@@ -6,11 +6,8 @@ npm start
 
 npm run dev
 
-# Carga de Productos
+# Carga y listado de Productos
 http://localhost:8080/
-
-# Listado de Productos
-http://localhost:8080/productos
 
 # Motivos por los que elegí EJS por sobre pug y handlebars
 - Es el que tiene más Weekly downloads en npm por lo que sería el más popular.
