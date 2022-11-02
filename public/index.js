@@ -7,7 +7,11 @@ socket.on('newProduct', (producto) => {
     <td>${producto.price}</td>`
     document.getElementById("tbody").appendChild(tr);
 });
-
+socket.on('newMessage', (message) => {
+    const div = document.createElement('div');
+    div.innerHTML = `${message.mail} [${message.time}] ${message.content}`
+    document.getElementById("mensajes").appendChild(div);
+});
 const button = document.getElementById("save");
 button.addEventListener("click", async () => {
     const title = document.getElementById("title")?.value;
@@ -31,3 +35,12 @@ button.addEventListener("click", async () => {
     }
 
 })
+
+document.getElementById("send").addEventListener('click', () => {
+
+    //Emit Message to the server
+    socket.emit('emitMessage',
+        {mail:document.getElementById("email")?.value,
+        content:document.getElementById("message")?.value});
+
+});
