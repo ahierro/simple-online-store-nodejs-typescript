@@ -1,12 +1,16 @@
 const express = require('express');
-const routerProducts = require('./productos');
+const { productService } = require('../services/productService');
+const { getWsServer } = require('../services/socket');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    res.render('alta',{});
+    res.render('productos',{productos: await productService.getAll()});
 });
-
-router.use('/productos', routerProducts);
+router.post('/', async (req, res) => {
+    const newProduct = await productService.insert(req.body);
+    getWsServer().emit('newProduct',newProduct);
+    res.status(201).json(newProduct);
+});
 
 module.exports = router

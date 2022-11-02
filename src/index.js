@@ -1,11 +1,14 @@
 const app = require('./services/server');
+const { initWsServer } = require('./services/socket');
 const PORT = 8080;
 
-const server = app.listen(PORT, () => {
-    console.log(`Servidor http escuchando en el puerto ${server.address().port}`);
-});
+(async () => {
+    initWsServer(app);  //aca esta la magia
+    const server = app.listen(PORT, () => console.log(`Server listening to port ${PORT}`));
 
-server.on('error', (err) => {
-    console.log('Error en el servidor!! =>', err);
-});
+    server.on('error', (err) => {
+        console.log('Error on server', err);
+    });
+})()
+
 

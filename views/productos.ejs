@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Alta de Producto</title>
+    <link rel="stylesheet" type="text/css" href="../style.css"/>
+</head>
+<body>
+<h1>Alta de Producto</h1>
+<form  action="/" method="post">
+    <ul>
+        <li>
+            <label for="title">title:</label>
+            <input type="text" id="title" name="title">
+        </li>
+        <li>
+            <label for="thumbnail">thumbnail:</label>
+            <input type="text" id="thumbnail" name="thumbnail">
+        </li>
+        <li>
+            <label for="price">price:</label>
+            <input type="number" id="price" name="price">
+        </li>
+        <li>
+            <button type="button" id="save">Guardar Producto</button>
+        </li>
+    </ul>
+</form>
+<div>
+    <h1>Listado de Productos</h1>
+    <% if(productos && productos.length ) { %>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titulo</th>
+                <th>Foto</th>
+                <th>Precio</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            <% productos.forEach(producto => { %>
+            <tr>
+                <td><%=producto.id%></td>
+                <td><%=producto.title%></td>
+                <td><img src="<%=producto.thumbnail%>" alt="producto"></td>
+                <td><%=producto.price%></td>
+            </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    <%} else { %>
+        <p>No hay productos</p>
+    <% } %>
+</div>
+<div>
+    <h1>Centro de Mensajes</h1>
+    <input type="email" id="email" placeholder="test@hotmail.com">
+    <div id="mensajes">
+
+    </div>
+    <input type="text" id="message" placeholder="Ingresa tu mensaje">
+    <button type="button" id="send">Enviar</button>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="index.js">
+</script>
+</body>
+</html>
