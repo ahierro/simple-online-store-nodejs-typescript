@@ -1,0 +1,44 @@
+[
+	{
+		"products": [],
+		"timestamp": "2022-11-06T02:49:45.520Z",
+		"id": "f4f1fd2b-359d-4934-8782-adecf45acb0f"
+	},
+	{
+		"products": [
+			{
+				"stock": 23,
+				"code": "5413992501045",
+				"description": "Escuadra Made in Argentina 20cm",
+				"title": "Escuadra",
+				"price": 126,
+				"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+				"id": "faab7381-85cb-4f41-b158-49a13a56953b",
+				"timestampProducto": "2022-11-06T14:40:01.553Z",
+				"quantity": 22
+			},
+			{
+				"stock": 65,
+				"code": "4015468101080",
+				"description": "Cuaderno 120 hojas tapa Verde",
+				"title": "Cuaderno",
+				"price": 111,
+				"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+				"id": "5e09925d-7008-434c-b6a0-dc8c31e7150b",
+				"timestampProducto": "2022-11-02T14:40:01.553Z",
+				"quantity": 50
+			}
+		],
+		"timestamp": "2022-11-06T15:49:45.520Z",
+		"id": "55423a2e-9f4b-495f-9191-5f84d7115189"
+	},
+	{
+		"products": [],
+		"id": "22cc09b9-6a03-42d2-a525-8f76d115ed57"
+	},
+	{
+		"products": [],
+		"timestamp": "2022-11-07T02:51:05.967Z",
+		"id": "84751246-63a9-41ee-8d27-69193d5ac64c"
+	}
+]

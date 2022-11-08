@@ -57,7 +57,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Cuaderno\",\r\n    \"price\": 111,\r\n    \"thumbnail\": \"https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png\"\r\n}",
+							"raw": "{\t\t\r\n    \"stock\": 65,\r\n\t\"code\": \"4015468101080\",\r\n\t\"description\": \"Cuaderno 120 hojas tapa Verde\" ,\r\n    \"title\": \"Cuaderno\",\r\n    \"price\": 111,\r\n    \"thumbnail\": \"https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -86,7 +86,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Escuadra\",\r\n    \"price\": 126,\r\n    \"thumbnail\": \"https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png\"\r\n}",
+							"raw": "{\r\n    \"stock\": 23,\r\n    \"code\": \"5413992501045\",\r\n    \"timestamp\": \"2022-11-06T14:40:01.553Z\",\r\n    \"description\": \"Escuadra Made in Argentina 20cm\",\r\n    \"title\": \"Escuadra\",\r\n    \"price\": 888,\r\n    \"thumbnail\": \"https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png\",\r\n    \"id\": \"faab7381-85cb-4f41-b158-49a13a56953b\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -115,7 +115,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/productos/4daeba96-e2b0-4eb0-a6c7-258fe968d298",
+							"raw": "http://localhost:8080/api/productos/952f507b-b427-48c7-9742-14d91da11bf2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -124,7 +124,142 @@
 							"path": [
 								"api",
 								"productos",
-								"4daeba96-e2b0-4eb0-a6c7-258fe968d298"
+								"952f507b-b427-48c7-9742-14d91da11bf2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post carritos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"products\": []\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carrito",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carrito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete carrito",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carrito/f4f1fd2b-359d-4934-8782-adecf45acb0f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carrito",
+								"f4f1fd2b-359d-4934-8782-adecf45acb0f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get productos de un carrito",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carrito/55423a2e-9f4b-495f-9191-5f84d7115189/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carrito",
+								"55423a2e-9f4b-495f-9191-5f84d7115189",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "agregar producto a carrito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 50,\r\n    \"id\": \"5e09925d-7008-434c-b6a0-dc8c31e7150b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carrito/55423a2e-9f4b-495f-9191-5f84d7115189/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carrito",
+								"55423a2e-9f4b-495f-9191-5f84d7115189",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "agregar producto a carrito Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\":40,\r\n    \"id\": \"faab7381-85cb-4f41-b158-49a13a56953b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carrito/55423a2e-9f4b-495f-9191-5f84d7115189/productos/faab7381-85cb-4f41-b158-49a13a56953b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carrito",
+								"55423a2e-9f4b-495f-9191-5f84d7115189",
+								"productos",
+								"faab7381-85cb-4f41-b158-49a13a56953b"
 							]
 						}
 					},
