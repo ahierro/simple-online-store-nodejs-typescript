@@ -1,6 +1,8 @@
-const Container = require('../container/container');
-const express = require('express');
-const ApiError = require("../exceptions/ApiError");
+import {Container} from "../container/container";
+
+import express from "express";
+
+import {ApiError} from "../exceptions/ApiError";
 
 const router = express.Router();
 const cartContainer = new Container("cart.json",(obj)=>{
@@ -49,4 +51,4 @@ router.delete('/:id/productos/:id_prod', async (req, res) => {
     res.status(200);
 });
 
-module.exports = router
+export default router

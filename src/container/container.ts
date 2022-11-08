@@ -1,15 +1,11 @@
-const fs = require('fs');
-const {v4: uuidv4} = require('uuid');
-require('express-async-errors');
-const ApiError = require('../exceptions/ApiError');
+import fs from "fs";
+import {ApiError} from "../exceptions/ApiError";
+import {v4 as uuidv4} from "uuid";
+import express_async_errors from "express-async-errors";
 
-module.exports = class Container {
-    #fileName;
+export class Container {
 
-    constructor(filename, validate, name) {
-        this.#fileName = filename;
-        this.validate = validate;
-        this.name = name
+    constructor(private filename:string, private validate: (obj:any)=>void,private name:string) {
     }
 
     upsert(originalList, newObj) {
@@ -61,7 +57,7 @@ module.exports = class Container {
 
     async getAll() {
         try {
-            const file = await fs.promises.readFile(this.#fileName, 'utf-8')
+            const file = await fs.promises.readFile(this.filename, 'utf-8')
             return JSON.parse(file);
         } catch (err) {
             if (err.code === "ENOENT") {
@@ -84,6 +80,6 @@ module.exports = class Container {
     }
 
     async #write(list) {
-        await fs.promises.writeFile(this.#fileName, JSON.stringify(list, null, '\t'));
+        await fs.promises.writeFile(this.filename, JSON.stringify(list, null, '\t'));
     }
 }

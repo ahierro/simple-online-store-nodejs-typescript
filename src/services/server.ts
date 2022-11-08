@@ -1,6 +1,9 @@
-const express = require("express");
-const mainRouter = require("../routes");
-const ApiError = require("../exceptions/ApiError");
+import {ApiError} from "../exceptions/ApiError";
+
+import express from "express";
+
+import mainRouter from "../routes";
+
 const app = express();
 
 app.use(express.json());
