@@ -1,3 +1,3 @@
 export default {
-    admin: false
+    admin: true
 }

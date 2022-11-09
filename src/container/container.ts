@@ -1,7 +1,6 @@
 import fs from "fs";
 import {ApiError} from "../exceptions/ApiError";
 import {v4 as uuidv4} from "uuid";
-import express_async_errors from "express-async-errors";
 import {Entity} from "../model/Entity";
 
 export class Container<T extends Entity> {
@@ -24,9 +23,9 @@ export class Container<T extends Entity> {
     }
 
     async insert(obj:T) {
-        this.validate(obj);
-        const list = await this.getAll();
         const newObj = {...obj, id: uuidv4(),timestamp:new Date().toISOString()};
+        this.validate(newObj);
+        const list = await this.getAll();
         list?.push(newObj);
         await this.#write(list);
         return newObj;

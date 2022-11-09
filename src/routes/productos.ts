@@ -3,6 +3,7 @@ import express from "express";
 import {ApiError} from "../exceptions/ApiError";
 import adminGuard from "../middlewares/adminGuard";
 import {ProductDTO} from "../model/ProductDTO";
+import asyncHandler from "express-async-handler";
 
 const router = express.Router();
 const productContainer = new Container<ProductDTO>("productos.json",(obj)=>{
@@ -11,27 +12,27 @@ const productContainer = new Container<ProductDTO>("productos.json",(obj)=>{
         }
 },"Producto");
 
-router.get('/', async (req, res) => {
+router.get('/', asyncHandler(async (req, res) => {
     res.json(await productContainer.getAll());
-});
+}));
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', asyncHandler(async (req, res) => {
     res.json(await productContainer.getById(req.params.id));
-});
+}));
 
-router.post('/', adminGuard,async (req, res) => {
+router.post('/', adminGuard,asyncHandler(async (req, res) => {
     const product = req.body;
     res.status(201).json(await productContainer.insert(product));
-});
+}));
 
-router.put('/:id', adminGuard,async (req, res) => {
+router.put('/:id', adminGuard,asyncHandler(async (req, res) => {
     await productContainer.update(req.params.id, req.body);
     res.status(200).json();
-});
+}));
 
-router.delete('/:id', adminGuard,async (req, res) => {
+router.delete('/:id', adminGuard,asyncHandler(async (req, res) => {
     await productContainer.deleteById(req.params.id);
     res.status(200).json();
-});
+}));
 
 export default router

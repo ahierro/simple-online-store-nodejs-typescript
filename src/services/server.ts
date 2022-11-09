@@ -1,7 +1,5 @@
 import {ApiError} from "../exceptions/ApiError";
-
 import express from "express";
-
 import mainRouter from "../routes";
 
 const app = express();
