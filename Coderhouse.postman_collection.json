@@ -209,7 +209,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"quantity\": 50,\r\n    \"id\": \"5e09925d-7008-434c-b6a0-dc8c31e7150b\"\r\n}",
+							"raw": "{\r\n    \"quantity\": 50,\r\n    \"id\": \"952f507b-b427-48c7-9742-14d91da11bf2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -234,21 +234,12 @@
 					"response": []
 				},
 				{
-					"name": "agregar producto a carrito Copy",
+					"name": "delete producto de carrito",
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"quantity\":40,\r\n    \"id\": \"faab7381-85cb-4f41-b158-49a13a56953b\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/api/carrito/55423a2e-9f4b-495f-9191-5f84d7115189/productos/faab7381-85cb-4f41-b158-49a13a56953b",
+							"raw": "http://localhost:8080/api/carrito/55423a2e-9f4b-495f-9191-5f84d7115189/productos/952f507b-b427-48c7-9742-14d91da11bf2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -259,7 +250,7 @@
 								"carrito",
 								"55423a2e-9f4b-495f-9191-5f84d7115189",
 								"productos",
-								"faab7381-85cb-4f41-b158-49a13a56953b"
+								"952f507b-b427-48c7-9742-14d91da11bf2"
 							]
 						}
 					},
