@@ -1,6 +1,7 @@
 import {Container} from "../container/container";
 import express from "express";
 import {ApiError} from "../exceptions/ApiError";
+import adminGuard from "../middlewares/adminGuard";
 
 const router = express.Router();
 const productContainer = new Container("productos.json",(obj)=>{
@@ -17,18 +18,18 @@ router.get('/:id', async (req, res) => {
     res.json(await productContainer.getById(req.params.id));
 });
 
-router.post('/', async (req, res) => {
+router.post('/', adminGuard,async (req, res) => {
     const product = req.body;
     product.timestamp = new Date().toISOString();
     res.status(201).json(await productContainer.insert(product));
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', adminGuard,async (req, res) => {
     await productContainer.update(req.params.id, req.body);
     res.status(200).json();
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', adminGuard,async (req, res) => {
     await productContainer.deleteById(req.params.id);
     res.status(200).json();
 });
