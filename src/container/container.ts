@@ -2,10 +2,11 @@ import fs from "fs";
 import {ApiError} from "../exceptions/ApiError";
 import {v4 as uuidv4} from "uuid";
 import {Entity} from "../model/Entity";
+import {validateSync} from 'class-validator';
 
 export class Container<T extends Entity> {
 
-    constructor(private filename:string, private validate: (obj:T)=>void,private name:string) {
+    constructor(private filename:string,private name:string) {
     }
 
     upsert(originalList:T[], newObj) {
@@ -21,10 +22,15 @@ export class Container<T extends Entity> {
             }
         }
     }
-
+    validateFields(obj:T){
+        const errors = validateSync(obj,{ skipMissingProperties: false });
+        if (errors.length > 0) {
+            throw new ApiError({status: 400, message: errors.map(e => Object.values(e.constraints).join(",")).join("; ")});
+        }
+    }
     async insert(obj:T) {
+        this.validateFields(obj);
         const newObj = {...obj, id: uuidv4(),timestamp:new Date().toISOString()};
-        this.validate(newObj);
         const list = await this.getAll();
         list?.push(newObj);
         await this.#write(list);
@@ -32,7 +38,7 @@ export class Container<T extends Entity> {
     }
 
     async update(id, obj:T) {
-        this.validate(obj);
+        this.validateFields(obj);
         if (obj.id && obj.id !== id) {
             throw new ApiError({status: 400, message: "El id del body no coincide con el parametro"});
         }

@@ -1,20 +1,21 @@
 import {Container} from "../container/container";
 import express from "express";
-import {ApiError} from "../exceptions/ApiError";
 import {ProductDTO} from "../model/ProductDTO";
 import {CartDTO} from "../model/CartDTO";
 import asyncHandler from "express-async-handler";
 
 const router = express.Router();
-const cartContainer = new Container<CartDTO>("cart.json",(obj)=>{
-    if(!obj || !obj.products){
-        throw new ApiError({status:400,message:"Objeto Invalido. No tiene los campos requeridos"});
-    }
-},"Carrito");
-const productContainer = new Container<ProductDTO>("productos.json",()=>{},"Producto");
+const cartContainer = new Container<CartDTO>("cart.json","Carrito");
+const productContainer = new Container<ProductDTO>("productos.json","Producto");
+
+const castCart = (obj)=>{
+    const cart = new CartDTO();
+    Object.assign(cart,obj);
+    return cart;
+}
 router.post('/', asyncHandler(async (req, res) => {
     const cart = req.body;
-    res.status(201).json(await cartContainer.insert(cart));
+    res.status(201).json(await cartContainer.insert(castCart(cart)));
 }));
 
 router.delete('/:id', asyncHandler(async (req, res) => {
