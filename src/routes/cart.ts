@@ -49,7 +49,7 @@ router.delete('/:id/productos/:id_prod', asyncHandler(async (req, res) => {
         cart.products = cart?.products?.filter(p => p?.id !== req.params.id_prod);
     }
     await cartContainer.update(req.params.id,cart);
-    res.status(200);
+    res.status(200).json();
 }));
 
 export default router
