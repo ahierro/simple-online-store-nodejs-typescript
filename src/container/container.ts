@@ -2,13 +2,14 @@ import fs from "fs";
 import {ApiError} from "../exceptions/ApiError";
 import {v4 as uuidv4} from "uuid";
 import express_async_errors from "express-async-errors";
+import {Entity} from "../model/Entity";
 
-export class Container {
+export class Container<T extends Entity> {
 
-    constructor(private filename:string, private validate: (obj:any)=>void,private name:string) {
+    constructor(private filename:string, private validate: (obj:T)=>void,private name:string) {
     }
 
-    upsert(originalList, newObj) {
+    upsert(originalList:T[], newObj) {
         if (!newObj?.id) {
             throw new ApiError({status: 400, message: "El objeto debe contener un id"});
         }
@@ -22,16 +23,16 @@ export class Container {
         }
     }
 
-    async insert(obj) {
+    async insert(obj:T) {
         this.validate(obj);
         const list = await this.getAll();
-        const newObj = {...obj, id: uuidv4()};
+        const newObj = {...obj, id: uuidv4(),timestamp:new Date().toISOString()};
         list?.push(newObj);
         await this.#write(list);
         return newObj;
     }
 
-    async update(id, obj) {
+    async update(id, obj:T) {
         this.validate(obj);
         if (obj.id && obj.id !== id) {
             throw new ApiError({status: 400, message: "El id del body no coincide con el parametro"});

@@ -3,17 +3,18 @@ import {Container} from "../container/container";
 import express from "express";
 
 import {ApiError} from "../exceptions/ApiError";
+import {ProductDTO} from "../model/ProductDTO";
+import {CartDTO} from "../model/CartDTO";
 
 const router = express.Router();
-const cartContainer = new Container("cart.json",(obj)=>{
+const cartContainer = new Container<CartDTO>("cart.json",(obj)=>{
     if(!obj || !obj.products){
         throw new ApiError({status:400,message:"Objeto Invalido. No tiene los campos requeridos"});
     }
 },"Carrito");
-const productContainer = new Container("productos.json",()=>{},"Producto");
+const productContainer = new Container<ProductDTO>("productos.json",()=>{},"Producto");
 router.post('/', async (req, res) => {
     const cart = req.body;
-    cart.timestamp = new Date().toISOString();
     res.status(201).json(await cartContainer.insert(cart));
 });
 
@@ -36,7 +37,7 @@ router.post('/:id/productos', async (req, res) => {
         const product = await productContainer.getById(req.body.id);
         product.timestampProducto = product.timestamp;
         product.quantity = req.body.quantity;
-        delete product.timestamp;
+        product.timestamp = undefined;
         cartContainer.upsert(cart?.products,product)
     }
     res.status(201).json(await cartContainer.update(req.params.id,cart));

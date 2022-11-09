@@ -2,9 +2,10 @@ import {Container} from "../container/container";
 import express from "express";
 import {ApiError} from "../exceptions/ApiError";
 import adminGuard from "../middlewares/adminGuard";
+import {ProductDTO} from "../model/ProductDTO";
 
 const router = express.Router();
-const productContainer = new Container("productos.json",(obj)=>{
+const productContainer = new Container<ProductDTO>("productos.json",(obj)=>{
         if(!obj || !obj.title || !obj.price || !obj.thumbnail || !obj.description || !obj.timestamp || !obj.code || !obj.stock){
             throw new ApiError({status:400,message:"Objeto Invalido. No tiene los campos requeridos"});
         }
@@ -20,7 +21,6 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', adminGuard,async (req, res) => {
     const product = req.body;
-    product.timestamp = new Date().toISOString();
     res.status(201).json(await productContainer.insert(product));
 });
 
