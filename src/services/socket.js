@@ -16,7 +16,7 @@ const initWsServer = (server) => {
     socket.on('emitMessage', async (msg) => {
       try{
         const newMessage = {...msg,time:moment().format("D/M/YYYY HH:mm:ss")};
-        await chatService.save(newMessage);
+        await chatService.insert(newMessage);
         io.emit('newMessage',newMessage);
       }catch (e){
         console.log(e)
