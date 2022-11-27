@@ -2,7 +2,7 @@ import {Entity} from "./Entity";
 import {IsDefined, IsUrl, Min} from "class-validator";
 
 export class ProductDTO implements Entity{
-    id: string;
+    _id: string;
     @Min(0)
     @IsDefined()
     stock: number;

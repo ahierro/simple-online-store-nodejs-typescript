@@ -1,0 +1,2 @@
+MONGO_SRV=mongodb://crud-admin:superPass123@localhost:27017/ecommerce?authMechanism=DEFAULT
+PORT=8080
