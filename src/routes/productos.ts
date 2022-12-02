@@ -3,6 +3,7 @@ import adminGuard from "../middlewares/adminGuard";
 import {ProductDTO} from "../model/ProductDTO";
 import asyncHandler from "express-async-handler";
 import productService from '../services/productService';
+import productFakeService from '../services/productFakeService';
 
 const router = express.Router();
 const castProduct = (obj)=>{
@@ -12,6 +13,10 @@ const castProduct = (obj)=>{
 }
 router.get('/', asyncHandler(async (req, res) => {
     res.json(await productService.getAll());
+}));
+
+router.get('/productos-test', asyncHandler(async (req, res) => {
+    res.json(await productFakeService.getAll());
 }));
 
 router.get('/:id', asyncHandler(async (req, res) => {
