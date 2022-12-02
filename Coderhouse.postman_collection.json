@@ -10,6 +10,68 @@
 			"name": "Local",
 			"item": [
 				{
+					"name": "get productos-test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/productos-test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"productos-test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "messages normalized",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/messages/normalized",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"messages",
+								"normalized"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "messages denormalized",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/messages/denormalized",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"messages",
+								"denormalized"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get productos",
 					"request": {
 						"method": "GET",
