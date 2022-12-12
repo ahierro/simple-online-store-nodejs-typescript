@@ -1,14 +1,45 @@
 import {ApiError} from "../exceptions/ApiError";
 import express from "express";
 import mainRouter from "../routes";
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import Config from '../config/config';
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+interface SessionInfo {
+    loggedIn: boolean;
+    username : string;
+    admin : boolean;
+}
 
+declare module 'express-session' {
+    interface SessionData {
+        info: SessionInfo;
+    }
+}
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: Config.MONGO_SRV,
+        crypto: {
+            secret: 'squirrel',
+        },
+    }),
+    secret: 's3cr3ts2cr3t',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 60000,
+    },
+}));
 app.use('/api', mainRouter);
 app.use(express.static('public'));
+
 
 // MiddleWare for Error handling
 app.use((err, req, res, next) => {

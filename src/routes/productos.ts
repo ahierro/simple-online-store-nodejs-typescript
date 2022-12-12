@@ -4,6 +4,7 @@ import {ProductDTO} from "../model/ProductDTO";
 import asyncHandler from "express-async-handler";
 import productService from '../services/productService';
 import productFakeService from '../services/productFakeService';
+import loginValidator from "../services/loginValidator";
 
 const router = express.Router();
 const castProduct = (obj)=>{
@@ -11,7 +12,7 @@ const castProduct = (obj)=>{
     Object.assign(product,obj);
     return product;
 }
-router.get('/', asyncHandler(async (req, res) => {
+router.get('/', loginValidator, asyncHandler(async (req, res) => {
     res.json(await productService.getAll());
 }));
 
