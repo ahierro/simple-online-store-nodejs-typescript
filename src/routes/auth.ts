@@ -12,7 +12,6 @@ const signup = async (req, username, password, done) => {
     console.log('SIGNUP!');
     try {
         const newUser = new UserModel({username, password});
-        // @ts-ignore
         newUser.password = await newUser.encryptPassword(password);
         await newUser.save();
         return done(null, newUser);
@@ -28,7 +27,6 @@ const login = async (req, username, password, done) => {
     if (!user) {
         return done(null, false, { message: 'User not found' });
     } else {
-        // @ts-ignore
         const match = await user.matchPassword(password);
         match ? done(null, user) : done(null, false);
     }
