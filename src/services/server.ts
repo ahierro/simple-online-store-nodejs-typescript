@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import Config from '../config/config';
+import passport from 'passport';
+import {loginFunc, signUpFunc} from "../routes/auth";
 
 const app = express();
 
@@ -37,6 +39,12 @@ app.use(session({
         maxAge: 60000,
     },
 }));
+app.use(passport.initialize());
+
+app.use(passport.session());
+
+passport.use('login', loginFunc);
+passport.use('signup', signUpFunc);
 app.use('/api', mainRouter);
 app.use(express.static('public'));
 
