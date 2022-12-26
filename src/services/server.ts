@@ -29,14 +29,14 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl: Config.MONGO_SRV,
         crypto: {
-            secret: 'squirrel',
+            secret: Config.SECRET_MONGO,
         },
     }),
-    secret: 's3cr3ts2cr3t',
+    secret: Config.SECRET_SESSION,
     resave: false,
     saveUninitialized: true,
     cookie: {
-        maxAge: 60000,
+        maxAge: Config.SESSION_MAX_AGE
     },
 }));
 app.use(passport.initialize());

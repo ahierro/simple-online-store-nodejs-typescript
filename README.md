@@ -11,6 +11,13 @@ npm i uuid
 
 # API RESTful desafio coderhouse
 
+## INFO
+curl --location --request GET 'http://localhost:8080/api/info' 
+
+## RANDOMS
+
+curl --location --request GET 'http://localhost:8080/api/randoms?cant=20000' 
+
 ## Productos 
 ### El router base '/api/productos' implementará cuatro funcionalidades:
 ### GET: '/' - Me permite listar todos los productos disponibles

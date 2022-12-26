@@ -9,8 +9,8 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon",
-    "start": "node dist/index.js"
+    "dev": "nodemon src/index.ts --port=8080",
+    "start": "node dist/index.js --port=8080"
   },
   "repository": {
     "type": "git",
@@ -41,10 +41,12 @@
     "express": "^4.18.1",
     "express-async-handler": "^1.2.0",
     "express-session": "^1.17.3",
+    "lodash": "^4.17.21",
     "mongoose": "^6.7.3",
     "normalizr": "^3.6.2",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "yargs": "^17.6.2"
   }
 }
