@@ -1,3 +1,19 @@
+# Para probar Nginx
+npm build;
+node dist/index.ts --port=8080;
+node dist/index.js --port=8082;
+node dist/index.js --port=8083;
+node dist/index.js --port=8084;
+node dist/index.js --port=8085;
+
+copiar el contenido de nginx.conf y pegarlo en el archivo nginx.conf de la carpeta de instalación de nginx
+Iniciar nginx
+curl --location --request GET 'http://localhost:80/api/randoms?cant=20000'
+Esa llamada va a redirigir a uno de los 4 nodos que se encuentran corriendo en el puerto 8081, 8082, 8083, 8084
+curl --location --request GET 'http://localhost:80/api/info'
+Esa llamada va a redirigir al nodo del puerto 8080
+
+
 # Comandos que se ejecutaron
 npm init -y
 

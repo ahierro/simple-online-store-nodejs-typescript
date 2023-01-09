@@ -6,6 +6,7 @@ const router = express.Router();
 router.get('', (req, res) => {
     res.json({
         argv: Config.argv,
+        numCpus: Config.NUM_CPUS,
         platform: process.platform,
         version: process.version,
         rssMemoryUsage: process.memoryUsage().rss,

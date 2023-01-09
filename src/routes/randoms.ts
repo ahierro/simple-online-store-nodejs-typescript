@@ -1,7 +1,7 @@
 import express from "express";
 import { fork } from 'child_process';
 import path from 'path';
-const scriptPath = path.resolve(__dirname, './utils/calculo.ts');
+const scriptPath = path.resolve(__dirname, './utils/calculo');
 
 const router = express.Router();
 
