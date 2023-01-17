@@ -16,7 +16,14 @@
     "pm2": "pm2 start dist/index.js --watch -i max",
     "stop-pm2": "pm2 delete all",
     "forever": "forever start dist/index.js --watch",
-    "stop-forever": "forever stopall"
+    "stop-forever": "forever stopall",
+    "artillery-without-console-log": "artillery quick --count 50 -n 20 http://localhost:8080/api/info > profiling/artillery-without-console-log.txt",
+    "artillery-with-console-log": "artillery quick --count 50 -n 20 http://localhost:8080/api/info?log=true > profiling/artillery-with-console-log.txt",
+    "autocannon-without-console-log": "autocannon -c 100 -d 20 http://localhost:8080/api/info",
+    "autocannon-with-console-log": "autocannon -c 100 -d 20 http://localhost:8080/api/info?log=true",
+    "start:prof": "node --prof dist/index.js",
+    "start:inspect": "node --inspect dist/index.js",
+    "start0x": "0x dist/index.js"
   },
   "repository": {
     "type": "git",

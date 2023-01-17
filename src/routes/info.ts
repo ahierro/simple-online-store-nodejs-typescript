@@ -5,7 +5,7 @@ const router = express.Router();
 
 // with gzip 543 bytes, without gzip 567 bytes
 router.get('', (req, res) => {
-    res.json({
+    const response = {
         argv: Config.argv,
         numCpus: Config.NUM_CPUS,
         platform: process.platform,
@@ -14,7 +14,12 @@ router.get('', (req, res) => {
         execPath: process.execPath,
         pid: process.pid,
         cwd: process.cwd(),
-    });
+    };
+    // @ts-ignore
+    if(req.query.log){
+        console.log("response", response);
+    }
+    res.json(response);
 });
 
 
