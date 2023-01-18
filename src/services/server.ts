@@ -49,7 +49,7 @@ declare module 'express-session' {
 app.use(compression());
 app.use(express.json());
 app.use(cookieParser());
-const logger = log4js.getLogger('warningsFileAppender');
+const logger = log4js.getLogger();
 
 app.use((req, res, next) => {
     logger.info(`Request: ${req.method} ${req.url}`);
