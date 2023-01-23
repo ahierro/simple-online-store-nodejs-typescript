@@ -10,7 +10,7 @@ dotenv.config();
 export default {
     argv,
     MONGO_SRV: process.env.MONGO_SRV || 'mongodb://localhost:27017?authMechanism=DEFAULT',
-    PORT: argv.port || 8080,
+    PORT: process.env.PORT || 8080,
     MODE: argv.mode || 'fork',
     NUM_CPUS: os.cpus().length,
     admin: true,
