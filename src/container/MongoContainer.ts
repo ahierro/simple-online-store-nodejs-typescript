@@ -1,6 +1,6 @@
 import {ApiError} from "../exceptions/ApiError";
 import {Entity} from "../model/Entity";
-import {validateSync} from 'class-validator';
+import {validateObj} from "../services/requestValidationService";
 
 export class MongoContainer<T extends Entity> {
 
@@ -8,13 +8,7 @@ export class MongoContainer<T extends Entity> {
     }
 
     validateFields(obj: T) {
-        const errors = validateSync(obj, {skipMissingProperties: false});
-        if (errors.length > 0) {
-            throw new ApiError({
-                status: 400,
-                message: errors.map(e => Object.values(e.constraints).join(",")).join("; ")
-            });
-        }
+        validateObj(obj);
     }
 
     async insert(obj: T) {

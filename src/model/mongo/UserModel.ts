@@ -5,6 +5,12 @@ interface IUser {
     username: string;
     password: string;
     admin: boolean;
+    email: string;
+    name: string;
+    address: string;
+    age: number;
+    phone: string;
+    avatar: string;
 }
 
 interface IUserMethods  {
@@ -16,6 +22,12 @@ type UserModel = Model<IUser, {}, IUserMethods>;
 const userSchema = new Schema<IUser, UserModel, IUserMethods>({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    address: { type: String, required: false },
+    age: { type: Number, required: true },
+    phone: { type: String, required: true },
+    avatar: { type: String, required: false },
     admin: { type: Boolean, default: false },
 });
 

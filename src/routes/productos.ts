@@ -20,7 +20,7 @@ router.get('/productos-test', asyncHandler(async (req, res) => {
     res.json(await productFakeService.getAll());
 }));
 
-router.get('/:id', asyncHandler(async (req, res) => {
+router.get('/:id', loginValidator, asyncHandler(async (req, res) => {
     res.json(await productService.getById(req.params.id));
 }));
 

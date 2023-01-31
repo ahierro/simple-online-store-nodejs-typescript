@@ -9,29 +9,23 @@ import passport from 'passport';
 import {loginFunc, signUpFunc} from "../routes/auth";
 import compression from 'compression';
 import log4js from 'log4js';
+import {errorHandler} from "./errorHandler";
 
 const app = express();
 
 log4js.configure({
     appenders: {
         errorsFileAppender: { type: 'file', filename: './logs/errors.log' },
-        warningsFileAppender: { type: 'file', filename: './logs/warnings.log' },
         console: { type: 'console' },
         "errors": {
             type: "logLevelFilter",
             appender: "errorsFileAppender",
             level: "error",
             maxLevel: "error"
-        },
-        "warnings": {
-            type: "logLevelFilter",
-            appender: "warningsFileAppender",
-            level: "warn",
-            maxLevel: "warn"
         }
     },
     categories: {
-        default: { appenders: ['console','errors','warnings'], level: 'info' }
+        default: { appenders: ['console','errors'], level: 'info' }
     },
 });
 
@@ -84,17 +78,6 @@ app.get('*', function(req, res){
 });
 
 // MiddleWare for Error handling
-app.use((err, req, res, next) => {
-    logger.error(`Error:`,err);
-    if(err instanceof ApiError){
-        res.status(err?.status || 500).send({
-            error: err?.message
-        });
-    }else {
-        res.status(500).send({
-            error: 'Ha Ocurrido un error interno del servidor'
-        });
-    }
-});
+app.use(errorHandler);
 
 module.exports = app;

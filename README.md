@@ -1,120 +1,63 @@
-# Para probar Nginx
-npm build;
-node dist/index.ts --port=8080;
-node dist/index.js --port=8082;
-node dist/index.js --port=8083;
-node dist/index.js --port=8084;
-node dist/index.js --port=8085;
-
-copiar el contenido de nginx.conf y pegarlo en el archivo nginx.conf de la carpeta de instalación de nginx
-Iniciar nginx
-curl --location --request GET 'http://localhost:80/api/randoms?cant=20000'
-Esa llamada va a redirigir a uno de los 4 nodos que se encuentran corriendo en el puerto 8081, 8082, 8083, 8084
-curl --location --request GET 'http://localhost:80/api/info'
-Esa llamada va a redirigir al nodo del puerto 8080
-
-
-# Comandos que se ejecutaron
-npm init -y
-
-npm i nodemon -D
-
-npm i express
-
-npm i express-async-errors
-
-npm i uuid
-
 # API RESTful desafio coderhouse
 
-## INFO
-curl --location --request GET 'http://localhost:8080/api/info' 
+# Postman para pruebas
 
-## RANDOMS
+./Backend-Coderhouse-Hierro.postman_collection.json
 
-curl --location --request GET 'http://localhost:8080/api/randoms?cant=20000' 
+# Sign up
 
-## Productos 
-### El router base '/api/productos' implementará cuatro funcionalidades:
-### GET: '/' - Me permite listar todos los productos disponibles
-- curl --location --request GET 'http://localhost:8080/api/productos'
-#### Response
-```json
-[
-    {
-        "stock": 23,
-        "code": "5413992501045",
-        "timestamp": "2022-11-06T14:40:01.553Z",
-        "description": "Escuadra Made in Argentina 20cm",
-        "title": "Escuadra",
-        "price": 126,
-        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
-        "id": "faab7381-85cb-4f41-b158-49a13a56953b"
-    },
-    {
-        "stock": 65,
-        "code": "4015468101080",
-        "timestamp": "2022-11-02T14:40:01.553Z",
-        "description": "Globo Made in China",
-        "title": "Globo Terráqueo",
-        "price": 345.67,
-        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
-        "id": "952f507b-b427-48c7-9742-14d91da11bf2"
-    },
-    {
-        "stock": 65,
-        "code": "4015468101080",
-        "timestamp": "2022-11-02T14:40:01.553Z",
-        "description": "Cuaderno 120 hojas tapa Verde",
-        "title": "Cuaderno",
-        "price": 111,
-        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
-        "id": "5e09925d-7008-434c-b6a0-dc8c31e7150b"
-    }
-]
-```
-### GET: '/:id?' - Me permite listar un producto por su id (disponible para usuarios y administradores)
-- curl --location --request GET 'http://localhost:8080/api/productos/faab7381-85cb-4f41-b158-49a13a56953b'
-#### Response
-```json
-{
-  "stock": 23,
-  "code": "5413992501045",
-  "timestamp": "2022-11-06T14:40:01.553Z",
-  "description": "Escuadra Made in Argentina 20cm",
-  "title": "Escuadra",
-  "price": 126,
-  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
-  "id": "faab7381-85cb-4f41-b158-49a13a56953b"
-}
-```
-### POST: '/' - Para incorporar productos al listado (disponible para administradores)
-- curl --location --request POST 'http://localhost:8080/api/productos' \
+curl --location --request POST 'http://localhost:8080/api/session/signup' \
 --header 'Content-Type: application/json' \
 --data-raw '{		
-"stock": 65,
-"code": "4015468101080",
-"description": "Cuaderno 120 hojas tapa Verde" ,
-"title": "Cuaderno",
-"price": 111,
+"username": "testUserAlejandro",
+"password": "pass2pass2",
+"email": "taurean.gislason@ethereal.email",
+"name": "Asia Veum",
+"address": "Av San Martín 1470 - Ushuaia",
+"age":54,
+"phone":"+5491161818711",
+"avatar":"https://picsum.photos/200"
+}'
+
+# Login
+curl --location --request POST 'http://localhost:8080/api/session/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{		
+"username": "testUserAlejandro",
+"password": "pass2pass2"
+}'
+
+# Comprar (envia sms, whatsapp y mail) 
+curl --location --request POST 'http://localhost:8080/api/carrito/checkout/6383672663abaaa4bc4cf376'
+
+# Logout
+curl --location --request POST 'http://localhost:8080/api/session/logout' \
+--header 'Content-Type: application/json' \
+--data-raw '{		
+"username": "user1",
+"password": "pass1"
+}'
+
+# Get Products
+curl --location --request GET 'http://localhost:8080/api/productos'
+
+# Get Product by ID
+curl --location --request GET 'http://localhost:8080/api/productos/63836631d072110f1d49641c'
+
+# Insert Product
+curl --location --request POST 'http://localhost:8080/api/productos' \
+--header 'Content-Type: application/json' \
+--data-raw '{		
+"stock": 11,
+"code": "4015468101081",
+"description": "Cerveza Tirada 1L" ,
+"title": "Cerveza",
+"price": 100,
 "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png"
 }'
-#### Response status 201
-#### 
-```json
-{
-    "stock": 65,
-    "code": "4015468101080",
-    "description": "Cuaderno 120 hojas tapa Verde",
-    "title": "Cuaderno",
-    "price": 111,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
-    "timestamp": "2022-11-07T17:46:40.941Z",
-    "id": "978660e3-88ff-4f7c-9900-f6bfd24447b9"
-}
-```
-### PUT: '/:id' - Actualiza un producto por su id (disponible para administradores)
-- curl --location --request PUT 'http://localhost:8080/api/productos/faab7381-85cb-4f41-b158-49a13a56953b' \
+
+# Modify Product
+curl --location --request PUT 'http://localhost:8080/api/productos/63836631d072110f1d496417' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 "stock": 23,
@@ -122,65 +65,42 @@ curl --location --request GET 'http://localhost:8080/api/randoms?cant=20000'
 "timestamp": "2022-11-06T14:40:01.553Z",
 "description": "Escuadra Made in Argentina 20cm",
 "title": "Escuadra",
-"price": 888,
-"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
-"id": "faab7381-85cb-4f41-b158-49a13a56953b"
+"price": 822,
+"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
 }'
-#### Response status 200
-### DELETE: '/:id' - Borra un producto por su id (disponible para administradores)
-- curl --location --request DELETE 'http://localhost:8080/api/productos/952f507b-b427-48c7-9742-14d91da11bf2'
-#### Response status 200
 
-## Carritos
+# Delete Product
+curl --location --request DELETE 'http://localhost:8080/api/productos/63836631d072110f1d49641f'
 
-### POST: '/' - Crea un carrito y devuelve su id.
-- curl --location --request POST 'http://localhost:8080/api/carrito' \
-  --header 'Content-Type: application/json' \
-  --data-raw '{
+# Insert Cart
+curl --location --request POST 'http://localhost:8080/api/carrito' \
+--header 'Content-Type: application/json' \
+--data-raw '{
 
-  "products": []
+    "products": []
+
 }'
-#### Response status 201
-#### Response
-```json
-{
-    "products": [],
-    "timestamp": "2022-11-07T18:07:50.185Z",
-    "id": "0441547c-ce63-4cb1-9447-5cd5e4924b34"
-}
-```
 
-### DELETE: '/:id' - Vacía un carrito y lo elimina.
-- curl --location --request DELETE 'http://localhost:8080/api/carrito/f4f1fd2b-359d-4934-8782-adecf45acb0f'
-### GET: '/:id/productos' - Me permite listar todos los productos guardados en el carrito
-- curl --location --request GET 'http://localhost:8080/api/carrito/55423a2e-9f4b-495f-9191-5f84d7115189/productos'
-### POST: '/:id/productos' - Para incorporar productos al carrito por su id de producto
-- curl --location --request POST 'http://localhost:8080/api/carrito/55423a2e-9f4b-495f-9191-5f84d7115189/productos' \
-  --header 'Content-Type: application/json' \
-  --data-raw '{
-  "quantity": 50,
-  "id": "5e09925d-7008-434c-b6a0-dc8c31e7150b"
-  }'
-### DELETE: '/:id/productos/:id_prod' - Eliminar un producto del carrito por su id de carrito y de producto
-- curl --location --request DELETE 'http://localhost:8080/api/carrito/55423a2e-9f4b-495f-9191-5f84d7115189/productos/faab7381-85cb-4f41-b158-49a13a56953b' \
-  --header 'Content-Type: application/json' \
-  --data-raw '{
-  "quantity":40,
-  "id": "faab7381-85cb-4f41-b158-49a13a56953b"
-  }'
-#### Response status 200
+# Delete Cart
+curl --location --request DELETE 'http://localhost:8080/api/carrito/6383678e63abaaa4bc4cf383'
+
+# Get Products in cart
+curl --location --request GET 'http://localhost:8080/api/carrito/6383672663abaaa4bc4cf376/productos'
+
+# Add Product to cart
+curl --location --request POST 'http://localhost:8080/api/carrito/6383672663abaaa4bc4cf376/productos' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"quantity": 12,
+"id": "63836631d072110f1d496417"
+}'
+
+# Delete Product from cart
+curl --location --request DELETE 'http://localhost:8080/api/carrito/638360e36e9d1f38a180f68b/productos/63779c49e198ad02416c6140'
 
 
-
-#### Response
-```json
-```
-
-
-
-
-# Formulario carga de productos
-http://localhost:8080/ --> Formulario carga de productos
+# Para buildear 
+npm run build
 
 # Para correrlo en prod
 
@@ -189,7 +109,3 @@ npm start
 # Para correrlo en desarrollo
 
 npm run dev
-
-
-```json
-```

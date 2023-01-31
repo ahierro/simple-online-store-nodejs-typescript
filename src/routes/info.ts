@@ -1,6 +1,7 @@
 import express from "express";
 import Config from "../config/config";
-
+import log4js from "log4js";
+const logger = log4js.getLogger();
 const router = express.Router();
 
 // with gzip 543 bytes, without gzip 567 bytes
@@ -17,7 +18,7 @@ router.get('', (req, res) => {
     };
     // @ts-ignore
     if(req.query.log){
-        console.log("response", response);
+        logger.info("response", response);
     }
     res.json(response);
 });

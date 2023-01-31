@@ -58,9 +58,11 @@
     "lodash": "^4.17.21",
     "log4js": "^6.7.1",
     "mongoose": "^6.7.3",
+    "nodemailer": "^6.9.1",
     "normalizr": "^3.6.2",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
+    "twilio": "^3.84.1",
     "uuid": "^9.0.0",
     "yargs": "^17.6.2"
   }
