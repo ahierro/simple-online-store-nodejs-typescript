@@ -1,4 +1,3 @@
-import {ApiError} from "../exceptions/ApiError";
 import express from "express";
 import mainRouter from "../routes";
 import cookieParser from 'cookie-parser';
@@ -6,7 +5,7 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import Config from '../config/config';
 import passport from 'passport';
-import {loginFunc, signUpFunc} from "../routes/auth";
+import {loginFunc, signUpFunc} from "./authService";
 import compression from 'compression';
 import log4js from 'log4js';
 import {errorHandler} from "./errorHandler";

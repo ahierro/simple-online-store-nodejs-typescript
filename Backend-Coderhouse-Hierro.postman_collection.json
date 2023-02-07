@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\t\r\n    \"username\": \"testUserAlejandro\",\r\n\t\"password\": \"pass2pass2\",\r\n    \"email\": \"taurean.gislason@ethereal.email\",\r\n    \"name\": \"Asia Veum\", \r\n    \"address\": \"Av Cabildo 1470 CABA\",\r\n    \"age\":54,\r\n    \"phone\":\"+5491161815464\",\r\n    \"avatar\":\"https://picsum.photos/200\"\r\n}",
+							"raw": "{\t\t\r\n    \"username\": \"testUserAlejandro51k\",\r\n\t\"password\": \"pass2pass2\",\r\n    \"email\": \"emelie32@ethereal.email\",\r\n    \"name\": \"Ale Heir\", \r\n    \"address\": \"Av Cabildo 1471 CABA\",\r\n    \"age\":54,\r\n    \"phone\":\"+5491161818713\",\r\n    \"avatar\":\"https://picsum.photos/200\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -46,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\t\r\n    \"username\": \"testUserAlejandro\",\r\n\t\"password\": \"pass2pass2\"\r\n}",
+							"raw": "{\t\t\r\n    \"username\": \"testUserAlejandro51k\",\r\n\t\"password\": \"pass2pass2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -86,86 +86,6 @@
 								"carrito",
 								"checkout",
 								"6383672663abaaa4bc4cf376"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "info",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/info?log=true",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"info"
-							],
-							"query": [
-								{
-									"key": "log",
-									"value": "true"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "info railway",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://programacion-backend-coder-production.up.railway.app/api/info?log=true",
-							"protocol": "http",
-							"host": [
-								"programacion-backend-coder-production",
-								"up",
-								"railway",
-								"app"
-							],
-							"path": [
-								"api",
-								"info"
-							],
-							"query": [
-								{
-									"key": "log",
-									"value": "true"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "randoms",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/randoms?cant=200000",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"randoms"
-							],
-							"query": [
-								{
-									"key": "cant",
-									"value": "200000"
-								}
 							]
 						}
 					},
@@ -222,68 +142,6 @@
 					"response": []
 				},
 				{
-					"name": "get productos-test",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/productos-test",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"productos-test"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "messages normalized",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/messages/normalized",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"messages",
-								"normalized"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "messages denormalized",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/messages/denormalized",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"messages",
-								"denormalized"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "get producto by id",
 					"request": {
 						"method": "GET",
@@ -311,7 +169,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\t\r\n    \"stock\": 11,\r\n\t\"code\": \"4015468101081\",\r\n\t\"description\": \"Cerveza Tirada 1L\" ,\r\n    \"title\": \"Cerveza\",\r\n    \"price\": 100,\r\n    \"thumbnail\": \"https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png\"\r\n}",
+							"raw": "{\t\t\r\n    \"stock\": 12,\r\n\t\"code\": \"4043218101081\",\r\n\t\"description\": \"Monitor 42 4k\" ,\r\n    \"title\": \"Monitor\",\r\n    \"price\": 100,\r\n    \"thumbnail\": \"https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -340,7 +198,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"stock\": 23,\r\n    \"code\": \"5413992501045\",\r\n    \"timestamp\": \"2022-11-06T14:40:01.553Z\",\r\n    \"description\": \"Escuadra Made in Argentina 20cm\",\r\n    \"title\": \"Escuadra\",\r\n    \"price\": 822,\r\n    \"thumbnail\": \"https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png\"\r\n}",
+							"raw": "{\r\n    \"stock\": 23,\r\n    \"code\": \"5413992501045\",\r\n    \"timestamp\": \"2022-11-06T14:40:01.553Z\",\r\n    \"description\": \"Monitor 27'LG\",\r\n    \"title\": \"Escuadra\",\r\n    \"price\": 822,\r\n    \"thumbnail\": \"https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -348,7 +206,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/productos/63836631d072110f1d496417",
+							"raw": "http://localhost:8080/api/productos/63e196f8917ca7dc1201157a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -357,7 +215,7 @@
 							"path": [
 								"api",
 								"productos",
-								"63836631d072110f1d496417"
+								"63e196f8917ca7dc1201157a"
 							]
 						}
 					},
@@ -369,7 +227,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/productos/63836631d072110f1d49641f",
+							"raw": "http://localhost:8080/api/productos/63e196f8917ca7dc1201157a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -378,7 +236,7 @@
 							"path": [
 								"api",
 								"productos",
-								"63836631d072110f1d49641f"
+								"63e196f8917ca7dc1201157a"
 							]
 						}
 					},
@@ -419,7 +277,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/carrito/6383678e63abaaa4bc4cf383",
+							"raw": "http://localhost:8080/api/carrito/63e19b2c917ca7dc1201158b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -428,7 +286,7 @@
 							"path": [
 								"api",
 								"carrito",
-								"6383678e63abaaa4bc4cf383"
+								"63e19b2c917ca7dc1201158b"
 							]
 						}
 					},
@@ -440,7 +298,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/carrito/6383672663abaaa4bc4cf376/productos",
+							"raw": "http://localhost:8080/api/carrito/63e19b54917ca7dc12011593/productos",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -449,7 +307,7 @@
 							"path": [
 								"api",
 								"carrito",
-								"6383672663abaaa4bc4cf376",
+								"63e19b54917ca7dc12011593",
 								"productos"
 							]
 						}
@@ -463,7 +321,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"quantity\": 12,\r\n    \"id\": \"63836631d072110f1d496417\"\r\n}",
+							"raw": "{\r\n    \"quantity\": 11,\r\n    \"id\": \"63e19b10917ca7dc12011586\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -471,7 +329,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/carrito/6383672663abaaa4bc4cf376/productos",
+							"raw": "http://localhost:8080/api/carrito/63e19b54917ca7dc12011593/productos",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -480,7 +338,7 @@
 							"path": [
 								"api",
 								"carrito",
-								"6383672663abaaa4bc4cf376",
+								"63e19b54917ca7dc12011593",
 								"productos"
 							]
 						}
@@ -493,7 +351,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/carrito/638360e36e9d1f38a180f68b/productos/63779c49e198ad02416c6140",
+							"raw": "http://localhost:8080/api/carrito/63e19b54917ca7dc12011593/productos/63e19b10917ca7dc12011586",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -502,9 +360,9 @@
 							"path": [
 								"api",
 								"carrito",
-								"638360e36e9d1f38a180f68b",
+								"63e19b54917ca7dc12011593",
 								"productos",
-								"63779c49e198ad02416c6140"
+								"63e19b10917ca7dc12011586"
 							]
 						}
 					},

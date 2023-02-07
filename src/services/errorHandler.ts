@@ -1,5 +1,6 @@
 import {ApiError} from "../exceptions/ApiError";
 import log4js from "log4js";
+
 const logger = log4js.getLogger();
 
 export const errorHandler = (err, req, res, next) => {

@@ -1,4 +1,4 @@
-import {MongoContainer} from "../container/MongoContainer";
-import { CartModel } from '../model/mongo/CartModel';
+import {GenericService} from "./genericService";
+import cartDAO from "../persistence/dao/cartDAO";
 
-export default new MongoContainer("Carrito",CartModel);
+export const cartService = new GenericService(cartDAO);

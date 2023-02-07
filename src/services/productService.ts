@@ -1,4 +1,4 @@
-import {MongoContainer} from "../container/MongoContainer";
-import { ProductModel } from '../model/mongo/ProductModel';
+import {GenericService} from "./genericService";
+import productDAO from "../persistence/dao/productDAO";
 
-export default new MongoContainer("Producto",ProductModel);
+export const productService = new GenericService(productDAO);

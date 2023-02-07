@@ -1,8 +1,9 @@
-import {connectDb} from "./services/db";
-const app = require('./services/server');
+import {connectDb} from "./persistence/db";
 import Config from './config/config';
 import cluster from 'cluster';
 import log4js from "log4js";
+
+const app = require('./services/server');
 const logger = log4js.getLogger();
 
 const init = async () => {

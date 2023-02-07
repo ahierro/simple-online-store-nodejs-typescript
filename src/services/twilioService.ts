@@ -2,6 +2,7 @@ import config from '../config/config'
 import twilio from 'twilio';
 import log4js from "log4js";
 import {ApiError} from "../exceptions/ApiError";
+
 const logger = log4js.getLogger();
 
 const twilioClient = twilio(config.TWILIO_SID, config.TWILIO_TOKEN);
