@@ -24,5 +24,6 @@ export default {
     admin: true,
     SECRET_MONGO: process.env.SECRET_MONGO,
     SECRET_SESSION: process.env.SECRET_SESSION,
-    SESSION_MAX_AGE: +process.env.SESSION_MAX_AGE
+    SESSION_MAX_AGE: +process.env.SESSION_MAX_AGE,
+    FACTORY: process.env.FACTORY,
 }

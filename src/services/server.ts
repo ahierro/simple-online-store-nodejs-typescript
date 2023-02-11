@@ -59,8 +59,9 @@ app.use(session({
     secret: Config.SECRET_SESSION,
     resave: false,
     saveUninitialized: true,
+    rolling: true, // reset expiration on each request
     cookie: {
-        maxAge: Config.SESSION_MAX_AGE
+        maxAge: Config.SESSION_MAX_AGE,
     },
 }));
 app.use(passport.initialize());

@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
+import {ProductEntity} from "./ProductEntity";
 
 const {Schema} = mongoose;
 
-export const ProductSchema = new Schema<any>(
+export const ProductSchema = new Schema<ProductEntity>(
     {
         stock: {type: Number, required: true},
         code: {type: String, required: true},

@@ -1,8 +1,7 @@
 import {ApiError} from "../exceptions/ApiError";
-import {EntityDTO} from "../dto/EntityDTO";
 
 export class UtilService {
-    static insertOrUpdateById(originalList: EntityDTO[], newObj) {
+    static insertOrUpdateById(originalList: any, newObj) {
         if (!newObj?._id) {
             throw new ApiError({status: 400, message: "El objeto debe contener un id"});
         }

@@ -1,27 +1,40 @@
-import {productService} from "../services/productService";
 import {plainToClassFromExist} from "class-transformer";
 import {ProductDTO} from "../dto/ProductDTO";
+import {ProductService} from "../services/productService";
 
 export class ProductAPI {
 
+    private static instance: ProductAPI;
+
+    static getInstance(): ProductAPI {
+        if (!this.instance) {
+            ProductAPI.instance = new ProductAPI();
+        }
+
+        return ProductAPI.instance;
+    }
+
+    private constructor() {
+    }
+
     async getAll() {
-        return await productService.getAll();
+        return await ProductService.getInstance().getAll();
     }
 
     async getById(id) {
-        return await productService.getById(id);
+        return await ProductService.getInstance().getById(id);
     }
 
     async create(requestBody) {
-        return await productService.insert(plainToClassFromExist(new ProductDTO(), requestBody));
+        return await ProductService.getInstance().insert(plainToClassFromExist(new ProductDTO(), requestBody));
     }
 
     async update(id, requestBody) {
-        return await productService.update(id, plainToClassFromExist(new ProductDTO(), requestBody));
+        return await ProductService.getInstance().update(id, plainToClassFromExist(new ProductDTO(), requestBody));
     }
 
     async deleteById(id) {
-        return await productService.deleteById(id);
+        return await ProductService.getInstance().deleteById(id);
     }
 
 }

@@ -1,4 +1,4 @@
 export interface EntityDTO {
-    _id: string;
+    id: string;
     timestamp: string;
 }

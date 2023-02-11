@@ -1,11 +1,11 @@
 import {EntityDTO} from "../dto/EntityDTO";
 import {validateObj} from "./requestValidationService";
 import {ApiError} from "../exceptions/ApiError";
-import {GenericDAO} from "../container/genericDAO";
+import {GenericRepository} from "../persistence/repository/genericRepository";
 
 export class GenericService<T extends EntityDTO> {
 
-    constructor(private dao: GenericDAO<T>) {
+    constructor(protected repository: GenericRepository<T>) {
     }
 
     validateFields(obj: T) {
@@ -14,27 +14,27 @@ export class GenericService<T extends EntityDTO> {
 
     async insert(obj: T) {
         this.validateFields(obj);
-        return this.dao.insert(obj);
+        return await this.repository.insert(obj);
     }
 
     async update(id, obj: T) {
         this.validateFields(obj);
-        if (obj._id && obj._id.toString() !== id) {
+        if (obj.id && obj.id.toString() !== id) {
             throw new ApiError({status: 400, message: "El id del body no coincide con el parametro"});
         }
-        return this.dao.update(id,obj);
+        return await this.repository.update(id,obj);
     }
 
     async getById(id) {
-        return this.dao.getById(id);
+        return await this.repository.getById(id);
     }
 
     async getAll() {
-        return this.dao.getAll();
+        return await this.repository.getAll();
     }
 
     async deleteById(id) {
-        return this.dao.deleteById(id);
+        return await this.repository.deleteById(id);
     }
 
 }
