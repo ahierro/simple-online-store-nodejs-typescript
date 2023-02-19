@@ -1,6 +1,5 @@
 import {connectDb} from "./persistence/db";
 import Config from './config/config';
-import cluster from 'cluster';
 import log4js from "log4js";
 
 const app = require('./services/server');
@@ -17,19 +16,7 @@ const init = async () => {
     });
 
 };
-if(Config.MODE === 'cluster' && cluster.isPrimary) {
-    logger.info(`cantidad de nucleos= ${Config.NUM_CPUS}`);
-    logger.info(`PID MASTER= ${process.pid}`);
-    for (let i = 0; i < Config.NUM_CPUS; i++) {
-        cluster.fork()
-    }
-    cluster.on('exit', (worker, code) => {
-        logger.info(`Worker ${worker.process.pid} died with code ${code}`);
-        cluster.fork();
-    })
-} else {
-    init();
-}
+init();
 
 
 

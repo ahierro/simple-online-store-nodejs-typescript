@@ -1,6 +1,8 @@
 import {ApiError} from "../../exceptions/ApiError";
 import mongoose from 'mongoose';
 import {GenericDAO} from "./genericDAO";
+import log4js from "log4js";
+const logger = log4js.getLogger();
 
 export class MongoDAO<T> implements GenericDAO<T>{
 
@@ -19,7 +21,7 @@ export class MongoDAO<T> implements GenericDAO<T>{
     async getById(id) {
         return await this.doAction(async () => {
             let result = await this.collection.findById(id);
-            return result._doc;
+            return result?._doc;
         });
     }
 
@@ -36,6 +38,7 @@ export class MongoDAO<T> implements GenericDAO<T>{
         try {
             result = await action();
         } catch (e) {
+            logger.error(e);
             throw new ApiError({status: 500, message: `${e.reason}`});
         }
         if (!result) {
