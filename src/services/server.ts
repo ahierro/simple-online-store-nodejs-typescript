@@ -9,6 +9,8 @@ import {loginFunc, signUpFunc} from "./authService";
 import compression from 'compression';
 import log4js from 'log4js';
 import {errorHandler} from "./errorHandler";
+import {graphqlHTTP} from "express-graphql";
+import { graphqlRoot, graphqlSchema } from './graphql';
 
 const app = express();
 
@@ -72,13 +74,24 @@ passport.use('login', loginFunc);
 passport.use('signup', signUpFunc);
 app.use('/api', mainRouter);
 app.use(express.static('public'));
+
+
+// MiddleWare for Error handling
+app.use(errorHandler);
+
+app.use(
+    '/graphql',
+    graphqlHTTP({
+        schema: graphqlSchema,
+        rootValue: graphqlRoot,
+        graphiql: true,
+    })
+);
+
 app.get('*', function(req, res){
     logger.warn(`Method+Path does not exist: ${req.method} ${req.url}`);
     res.status(405).json({message: 'Method not allowed'});
 });
-
-// MiddleWare for Error handling
-app.use(errorHandler);
 
 module.exports = app;
 export default app;
