@@ -1,28 +1,35 @@
 import {CartAPI} from "../api/cartAPI";
+import {Context, Next} from "koa";
 
-export const create = async (req, res) => {
-    res.status(201).json(await CartAPI.getInstance().create(req.body));
+export const create = async (ctx: Context, next: Next) => {
+    ctx.body = await CartAPI.getInstance().create(ctx.request.body);
+    ctx.status = 201;
+    await next();
 }
 
-export const deleteById = async (req, res) => {
-    await CartAPI.getInstance().deleteById(req.params.id);
-    res.status(200).json();
+export const deleteById = async (ctx: Context, next: Next) => {
+    await CartAPI.getInstance().deleteById(ctx.params.id);
+    await next();
 }
 
-export const getProductsById = async (req, res) => {
-    res.json(await CartAPI.getInstance().getProductsById(req.params.id));
+export const getProductsById = async (ctx: Context, next: Next) => {
+    ctx.body = await CartAPI.getInstance().getProductsById(ctx.params.id);
+    await next();
 }
 
-export const deleteProduct = async (req, res) => {
-    await CartAPI.getInstance().deleteProduct(req.params.id, req.params.id_prod);
-    res.status(200).json();
+export const deleteProduct = async (ctx: Context, next: Next) => {
+    await CartAPI.getInstance().deleteProduct(ctx.params.id, ctx.params.id_prod);
+    await next();
 }
 
-export const addProduct = async (req, res) => {
-    res.status(201).json(await CartAPI.getInstance().addProduct(req.params.id, req.body.id, req.body.quantity));
+export const addProduct = async (ctx: Context, next: Next) => {
+    ctx.body = await CartAPI.getInstance().addProduct(ctx.params.id, ctx.request.body.id, ctx.request.body.quantity);
+    ctx.status = 201;
+    await next();
 }
 
-export const checkout = async (req, res) => {
-    await CartAPI.getInstance().checkout(req.params.id, req.user);
-    res.status(201).json({});
+export const checkout = async (ctx: Context, next: Next) => {
+    await CartAPI.getInstance().checkout(ctx.params.id, ctx.user);
+    ctx.status = 201;
+    await next();
 }

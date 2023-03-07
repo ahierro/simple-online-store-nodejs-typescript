@@ -1,14 +1,15 @@
-import express from "express";
-
+import Router from 'koa-router';
 import routerProducts from "./product";
-import routerSession from "./session";
+// import routerSession from "./session";
 
 import routerCart from "./cart";
 
-const router = express.Router();
+const router = new Router({
+    prefix: '/api',
+});
 
-router.use('/productos', routerProducts);
-router.use('/carrito', routerCart);
-router.use('/session', routerSession);
+router.use(routerProducts);
+router.use(routerCart);
+// router.use( routerSession);
 
-export default router
+export default router.routes();

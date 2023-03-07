@@ -1,15 +1,15 @@
-import express from "express";
-import adminGuard from "../middlewares/adminGuard";
-import asyncHandler from "express-async-handler";
-import loginValidator from "../middlewares/loginValidator";
+import Router from 'koa-router';
+
 import {create, deleteById, getAll, getById, update} from "../controllers/productController";
 
-const router = express.Router();
+const router = new Router({
+    prefix: '/productos',
+});
 
-router.get('/', loginValidator, asyncHandler(getAll));
-router.get('/:id', loginValidator, asyncHandler(getById));
-router.post('/', adminGuard, asyncHandler(create));
-router.put('/:id', adminGuard, asyncHandler(update));
-router.delete('/:id', adminGuard, asyncHandler(deleteById));
+router.get('/',  getAll);
+router.get('/:id', getById);
+router.post('/', create);
+router.put('/:id', update);
+router.delete('/:id',  deleteById);
 
-export default router
+export default router.routes();

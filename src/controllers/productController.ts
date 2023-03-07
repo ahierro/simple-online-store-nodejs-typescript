@@ -1,23 +1,28 @@
 import {ProductAPI} from "../api/productAPI";
+import {Context, Next} from "koa";
 
-export const getAll = async (req, res) => {
-    res.json(await ProductAPI.getInstance().getAll());
+export const getAll = async (ctx: Context, next: Next) => {
+    ctx.body = await ProductAPI.getInstance().getAll();
+    await next();
 }
 
-export const getById = async (req, res) => {
-    res.json(await ProductAPI.getInstance().getById(req.params.id));
+export const getById = async (ctx: Context, next: Next) => {
+    ctx.body = await ProductAPI.getInstance().getById(ctx.params.id);
+    await next();
 }
 
-export const create = async (req, res) => {
-    res.status(201).json(await ProductAPI.getInstance().create(req.body));
+export const create = async (ctx: Context, next: Next) => {
+    ctx.body = await ProductAPI.getInstance().create(ctx.request.body);
+    ctx.status = 201;
+    await next();
 }
 
-export const update = async (req, res) => {
-    await ProductAPI.getInstance().update(req.params.id,req.body);
-    res.status(200).json();
+export const update = async (ctx: Context, next: Next) => {
+    await ProductAPI.getInstance().update(ctx.params.id, ctx.request.body);
+    await next();
 }
 
-export const deleteById = async (req, res) => {
-    await ProductAPI.getInstance().deleteById(req.params.id);
-    res.status(200).json();
+export const deleteById = async (ctx: Context, next: Next) => {
+    await ProductAPI.getInstance().deleteById(ctx.params.id);
+    await next();
 }

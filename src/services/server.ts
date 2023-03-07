@@ -1,23 +1,13 @@
-import express from "express";
+import Koa from 'koa';
+import koaBody from 'koa-body';
 import mainRouter from "../routes";
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
-import Config from '../config/config';
-import passport from 'passport';
-import {loginFunc, signUpFunc} from "./authService";
-import compression from 'compression';
 import log4js from 'log4js';
-import {errorHandler} from "./errorHandler";
-import {graphqlHTTP} from "express-graphql";
-import { graphqlRoot, graphqlSchema } from './graphql';
-
-const app = express();
+import {ApiError} from "../exceptions/ApiError";
 
 log4js.configure({
     appenders: {
-        errorsFileAppender: { type: 'file', filename: './logs/errors.log' },
-        console: { type: 'console' },
+        errorsFileAppender: {type: 'file', filename: './logs/errors.log'},
+        console: {type: 'console'},
         "errors": {
             type: "logLevelFilter",
             appender: "errorsFileAppender",
@@ -26,72 +16,36 @@ log4js.configure({
         }
     },
     categories: {
-        default: { appenders: ['console','errors'], level: 'info' }
+        default: {appenders: ['console', 'errors'], level: 'info'}
     },
 });
 
-interface SessionInfo {
-    loggedIn: boolean;
-    username : string;
-    admin : boolean;
-}
-
-declare module 'express-session' {
-    interface SessionData {
-        info: SessionInfo;
-    }
-}
-app.use(compression());
-app.use(express.json());
-app.use(cookieParser());
 const logger = log4js.getLogger();
 
-app.use((req, res, next) => {
-    logger.info(`Request: ${req.method} ${req.url}`);
-    next();
-})
-app.use(express.urlencoded({ extended: true }));
-app.use(session({
-    store: MongoStore.create({
-        mongoUrl: Config.MONGO_SRV,
-        crypto: {
-            secret: Config.SECRET_MONGO,
-        },
-    }),
-    secret: Config.SECRET_SESSION,
-    resave: false,
-    saveUninitialized: true,
-    rolling: true, // reset expiration on each request
-    cookie: {
-        maxAge: Config.SESSION_MAX_AGE,
-    },
-}));
-app.use(passport.initialize());
+const app = new Koa();
 
-app.use(passport.session());
+app.use(koaBody());
 
-passport.use('login', loginFunc);
-passport.use('signup', signUpFunc);
-app.use('/api', mainRouter);
-app.use(express.static('public'));
-
-
-// MiddleWare for Error handling
-app.use(errorHandler);
-
-app.use(
-    '/graphql',
-    graphqlHTTP({
-        schema: graphqlSchema,
-        rootValue: graphqlRoot,
-        graphiql: true,
-    })
-);
-
-app.get('*', function(req, res){
-    logger.warn(`Method+Path does not exist: ${req.method} ${req.url}`);
-    res.status(405).json({message: 'Method not allowed'});
+app.use(async (ctx: Koa.Context, next: Koa.Next) => {
+    try {
+        await next();
+    } catch (err) {
+        logger.error(`Error:`, err);
+        if (err instanceof ApiError) {
+            ctx.body = {
+                error: err?.message
+            };
+            ctx.status = err?.status || 500;
+        } else {
+            ctx.body = {
+                error: 'Ha Ocurrido un error interno del servidor'
+            };
+            ctx.status = 500;
+        }
+        ctx.app.emit('error', err, ctx);
+    }
 });
 
-module.exports = app;
+app.use(mainRouter);
+
 export default app;
