@@ -1,9 +1,6 @@
-import  config from '../config/config'
-import loginValidator from "./loginValidator";
-const adminGuard = (req,res,next) => {
-    if(!config.admin){
-        return res.status(401).json({error: "Not authorized"})
-    }
-    loginValidator(req,res,next);
+import {checkAuth} from "../services/authService";
+
+const adminGuard = (req, res, next) => {
+    return checkAuth(req, res, next, true);
 }
 export default adminGuard;

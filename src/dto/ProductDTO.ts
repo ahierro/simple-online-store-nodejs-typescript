@@ -12,6 +12,8 @@ export class ProductDTO implements EntityDTO{
     @IsDefined()
     description: string;
     @IsDefined()
+    category: string;
+    @IsDefined()
     title: string;
     @Min(0)
     price: number;
@@ -29,6 +31,7 @@ export class ProductDTO implements EntityDTO{
         product.price = data.price;
         product.thumbnail = data.thumbnail;
         product.timestamp = data.timestamp;
+        product.category = data.category;
         return product;
     }
 
@@ -42,6 +45,7 @@ export class ProductDTO implements EntityDTO{
         product.price = data.price;
         product.thumbnail = data.thumbnail;
         product.timestamp = data.timestamp;
+        product.category = data.category;
         return product;
     }
 }

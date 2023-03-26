@@ -31,7 +31,7 @@ export class CartAPI {
 
     async getProductsById(id) {
         const cart = await CartService.getInstance().getById(id);
-        return cart.products;
+        return cart.products || [];
     }
 
     async addProduct(idCart, idProd, quantity) {

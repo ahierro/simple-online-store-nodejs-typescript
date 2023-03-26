@@ -10,7 +10,7 @@ export const deleteById = async (req, res) => {
 }
 
 export const getProductsById = async (req, res) => {
-    res.json(await CartAPI.getInstance().getProductsById(req.params.id));
+    res.status(200).json(await CartAPI.getInstance().getProductsById(req.params.id));
 }
 
 export const deleteProduct = async (req, res) => {
@@ -19,7 +19,7 @@ export const deleteProduct = async (req, res) => {
 }
 
 export const addProduct = async (req, res) => {
-    res.status(201).json(await CartAPI.getInstance().addProduct(req.params.id, req.body.id, req.body.quantity));
+    res.status(201).json(await CartAPI.getInstance().addProduct(req.params.id, req.body.idProduct, req.body.quantity));
 }
 
 export const checkout = async (req, res) => {

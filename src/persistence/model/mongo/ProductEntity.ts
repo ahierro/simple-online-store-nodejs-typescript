@@ -3,6 +3,7 @@ export class ProductEntity {
     stock: number;
     code: string;
     description: string;
+    category: string;
     title: string;
     price: number;
     thumbnail: string;

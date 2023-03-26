@@ -16,4 +16,8 @@ export class ProductService extends GenericService<ProductDTO> {
     private constructor() {
         super(ProductRepository.getInstance());
     }
+
+    async getAllByCategory(category: string) {
+        return await this.repository.getAllByFilters({category});
+    }
 }

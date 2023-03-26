@@ -1,14 +1,13 @@
 import express from "express";
 import mainRouter from "../routes";
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
-import Config from '../config/config';
-import passport from 'passport';
-import {loginFunc, signUpFunc} from "./authService";
 import compression from 'compression';
 import log4js from 'log4js';
 import {errorHandler} from "./errorHandler";
+import * as http from 'http';
+import * as path from "path";
+import swaggerUI from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
+import { info } from '../docs/info';
 
 const app = express();
 
@@ -28,20 +27,11 @@ log4js.configure({
     },
 });
 
-interface SessionInfo {
-    loggedIn: boolean;
-    username : string;
-    admin : boolean;
-}
-
-declare module 'express-session' {
-    interface SessionData {
-        info: SessionInfo;
-    }
-}
 app.use(compression());
 app.use(express.json());
-app.use(cookieParser());
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJSDoc(info)));
+app.disable('x-powered-by');
+
 const logger = log4js.getLogger();
 
 app.use((req, res, next) => {
@@ -49,29 +39,15 @@ app.use((req, res, next) => {
     next();
 })
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
-    store: MongoStore.create({
-        mongoUrl: Config.MONGO_SRV,
-        crypto: {
-            secret: Config.SECRET_MONGO,
-        },
-    }),
-    secret: Config.SECRET_SESSION,
-    resave: false,
-    saveUninitialized: true,
-    rolling: true, // reset expiration on each request
-    cookie: {
-        maxAge: Config.SESSION_MAX_AGE,
-    },
-}));
-app.use(passport.initialize());
-
-app.use(passport.session());
-
-passport.use('login', loginFunc);
-passport.use('signup', signUpFunc);
 app.use('/api', mainRouter);
+app.get('/', async (req, res) => {
+    res.render('chat',{});
+});
 app.use(express.static('public'));
+
+app.set('view engine', 'ejs');
+app.set('views', path.resolve(__dirname, '../../views'));
+
 app.get('*', function(req, res){
     logger.warn(`Method+Path does not exist: ${req.method} ${req.url}`);
     res.status(405).json({message: 'Method not allowed'});
@@ -79,6 +55,7 @@ app.get('*', function(req, res){
 
 // MiddleWare for Error handling
 app.use(errorHandler);
+const server = http.createServer(app);
 
-module.exports = app;
-export default app;
+module.exports = server;
+export default server;

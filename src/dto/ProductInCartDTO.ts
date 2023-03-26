@@ -11,6 +11,7 @@ export class ProductInCartDTO extends ProductDTO{
         product.id = productEntity._id;
         product.quantity = productEntity.quantity;
         product.stock = productEntity.stock;
+        product.category = productEntity.category;
         product.code = productEntity.code;
         product.description = productEntity.description;
         product.title = productEntity.title;
@@ -26,6 +27,7 @@ export class ProductInCartDTO extends ProductDTO{
         product._id = productEntity.id;
         product.stock = productEntity.stock;
         product.code = productEntity.code;
+        product.category = productEntity.category;
         product.description = productEntity.description;
         product.title = productEntity.title;
         product.price = productEntity.price;
@@ -40,6 +42,7 @@ export class ProductInCartDTO extends ProductDTO{
         product._id = productEntity.id;
         product.stock = productEntity.stock;
         product.code = productEntity.code;
+        product.category = productEntity.category;
         product.description = productEntity.description;
         product.title = productEntity.title;
         product.price = productEntity.price;

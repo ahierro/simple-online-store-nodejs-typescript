@@ -34,7 +34,9 @@ export class ProductRepository implements GenericRepository<ProductDTO> {
     async getAll() {
         return (await this.dao.getAll()).map(x => ProductDTO.from(x));
     }
-
+    async getAllByFilters(filters) {
+        return (await this.dao.getAllByFilters(filters)).map(x => ProductDTO.from(x));
+    }
     async deleteById(id) {
         return ProductDTO.from(await this.dao.deleteById(id));
     }

@@ -17,8 +17,12 @@ export class ProductAPI {
     private constructor() {
     }
 
-    async getAll() {
-        return await ProductService.getInstance().getAll();
+    async getAll(category) {
+        if(category){
+            return await ProductService.getInstance().getAllByCategory(category);
+        }else{
+            return await ProductService.getInstance().getAll();
+        }
     }
 
     async getById(id) {

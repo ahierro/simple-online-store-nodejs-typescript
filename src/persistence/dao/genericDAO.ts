@@ -8,6 +8,8 @@ export interface GenericDAO<T> {
 
     getAll(): Promise<T[]>;
 
+    getAllByFilters(filters): Promise<T[]>;
+
     deleteById(id): Promise<T>;
 
 }

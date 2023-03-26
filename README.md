@@ -1,111 +1,77 @@
-# API RESTful desafio coderhouse
+# API REST for a online store that offers a CRUD for products and carts
 
-# Postman para pruebas
+# Purpose
+This project was developed as a final project for the Backend Programming course at e-learning platform Coderhouse https://www.coderhouse.com/. 
+The course was oriented to the development of a REST API using Node.js, Express and MongoDB featuring CRUD operations for products and carts.
 
-./Backend-Coderhouse-Hierro.postman_collection.json
+# Technologies used in this project
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- Typescript
+- Socket.io
+- Swagger
+- JWT
+- Twilio
+- Nodemailer
+- Bcrypt
+- Dotenv
+- Nodemon
+- Log4JS
+- EJS
+- Mocha
+- Chai
+- Supertest
 
-# Sign up
-
-curl --location --request POST 'http://localhost:8080/api/session/signup' \
---header 'Content-Type: application/json' \
---data-raw '{		
-"username": "testUserAlejandro",
-"password": "pass2pass2",
-"email": "taurean.gislason@ethereal.email",
-"name": "Asia Veum",
-"address": "Av San Martín 1470 - Ushuaia",
-"age":54,
-"phone":"+5491161818711",
-"avatar":"https://picsum.photos/200"
-}'
-
-# Login
-curl --location --request POST 'http://localhost:8080/api/session/login' \
---header 'Content-Type: application/json' \
---data-raw '{		
-"username": "testUserAlejandro",
-"password": "pass2pass2"
-}'
-
-# Comprar (envia sms, whatsapp y mail) 
-curl --location --request POST 'http://localhost:8080/api/carrito/checkout/6383672663abaaa4bc4cf376'
-
-# Logout
-curl --location --request POST 'http://localhost:8080/api/session/logout' \
---header 'Content-Type: application/json' \
---data-raw '{		
-"username": "user1",
-"password": "pass1"
-}'
-
-# Get Products
-curl --location --request GET 'http://localhost:8080/api/productos'
-
-# Get Product by ID
-curl --location --request GET 'http://localhost:8080/api/productos/63836631d072110f1d49641c'
-
-# Insert Product
-curl --location --request POST 'http://localhost:8080/api/productos' \
---header 'Content-Type: application/json' \
---data-raw '{		
-"stock": 11,
-"code": "4015468101081",
-"description": "Cerveza Tirada 1L" ,
-"title": "Cerveza",
-"price": 100,
-"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png"
-}'
-
-# Modify Product
-curl --location --request PUT 'http://localhost:8080/api/productos/63836631d072110f1d496417' \
---header 'Content-Type: application/json' \
---data-raw '{
-"stock": 23,
-"code": "5413992501045",
-"timestamp": "2022-11-06T14:40:01.553Z",
-"description": "Escuadra Made in Argentina 20cm",
-"title": "Escuadra",
-"price": 822,
-"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
-}'
-
-# Delete Product
-curl --location --request DELETE 'http://localhost:8080/api/productos/63836631d072110f1d49641f'
-
-# Insert Cart
-curl --location --request POST 'http://localhost:8080/api/carrito' \
---header 'Content-Type: application/json' \
---data-raw '{
-
-    "products": []
-
-}'
-
-# Delete Cart
-curl --location --request DELETE 'http://localhost:8080/api/carrito/6383678e63abaaa4bc4cf383'
-
-# Get Products in cart
-curl --location --request GET 'http://localhost:8080/api/carrito/6383672663abaaa4bc4cf376/productos'
-
-# Add Product to cart
-curl --location --request POST 'http://localhost:8080/api/carrito/6383672663abaaa4bc4cf376/productos' \
---header 'Content-Type: application/json' \
---data-raw '{
-"quantity": 12,
-"id": "63836631d072110f1d496417"
-}'
-
-# Delete Product from cart
-curl --location --request DELETE 'http://localhost:8080/api/carrito/638360e36e9d1f38a180f68b/productos/63779c49e198ad02416c6140'
-
-
-# Para buildear 
+# Building
 npm run build
 
-# Para correrlo en prod
+# Running in prod
 
 npm start
 
-# Para correrlo en desarrollo
+# Running in dev mode
 
 npm run dev
+
+# Swagger Docs
+http://localhost:8080/docs/#/
+![swagger](/swagger_api.JPG "Swagger")
+
+# Authentication
+
+### Login and copy JWT token
+![auth_1](/auth_1.JPG "auth_1")
+### Click on Authorize Button
+![auth_2](/auth_2.JPG "auth_2")
+### Paste the token and click on Authorize
+![auth_3](/auth_3.JPG "auth_3")
+
+
+# Set up mail configuration
+Go to https://ethereal.email/create and create an account
+![etheral](/ethereal.JPG "Mail Configuration")
+
+Then, set the following environment variables on .env file:
+```dotenv
+ETHEREAL_EMAIL=tyshawn.buckridge@ethereal.email
+ETHEREAL_PASSWORD=sqUutuUyWFFkeX6S7k
+```
+
+# Set up Twilio configuration
+Go to https://www.twilio.com/try-twilio and create an account
+![twilio](/twilio.JPG "Twilio Configuration")
+![twilio](/twilio2.JPG "Twilio Configuration Whatsapp")
+
+Then, set the following environment variables on .env file:
+```dotenv
+TWILIO_SMS_FROM=+13...
+TWILIO_SID=AC...
+TWILIO_TOKEN=c7...
+TWILIO_WHATSAPP_FROM=whatsapp:+14...
+```
+
+# Chat Messages
+Go to http://localhost:8080/ and you will find a chat module that was implemented using socket.io
+![chat](/chat.JPG "Chat Messages")

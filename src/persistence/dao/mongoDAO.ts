@@ -29,6 +29,10 @@ export class MongoDAO<T> implements GenericDAO<T>{
         return this.collection.find();
     }
 
+    async getAllByFilters(filters): Promise<T[]>{
+        return this.collection.find(filters);
+    }
+
     async deleteById(id) {
         return await this.doAction(async () => await this.collection.findByIdAndDelete(id));
     }
@@ -42,7 +46,7 @@ export class MongoDAO<T> implements GenericDAO<T>{
             throw new ApiError({status: 500, message: `${e.reason}`});
         }
         if (!result) {
-            throw new ApiError({status: 404, message: `${this.name} no encontrado`});
+            throw new ApiError({status: 404, message: `${this.name} not found`});
         }
         return result;
     }

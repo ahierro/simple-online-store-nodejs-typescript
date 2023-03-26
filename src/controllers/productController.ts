@@ -1,7 +1,7 @@
 import {ProductAPI} from "../api/productAPI";
 
 export const getAll = async (req, res) => {
-    res.json(await ProductAPI.getInstance().getAll());
+    res.json(await ProductAPI.getInstance().getAll(req.query.category));
 }
 
 export const getById = async (req, res) => {

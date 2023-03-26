@@ -1,0 +1,933 @@
+paths:
+  /api/session/signup:
+    summary: Create a new user account
+    description: >-
+      This endpoint allows users to create a new account by providing their username, password, email,
+      name, address, age, phone, and avatar.
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sign_up_dto'
+              example:
+                username: testUserAlejandro51k
+                password: pass2pass2
+                email: emelie32@ethereal.email
+                name: Ale Heir
+                address: Av Cabildo 1471 CABA
+                age: 54
+                phone: '+5491161818711'
+                avatar: 'https://picsum.photos/200'
+            examples:
+              example:
+                value:
+                  username: testAdmin
+                  password: adminadmin
+                  admin: true
+                  email: emelie32@ethereal.email
+                  firstName: Alex
+                  lastName: Smith
+                  address: Av Cabildo 1471 CABA
+                  age: 54
+                  phone: '+5491161818711'
+                  avatarURL: 'https://picsum.photos/200'
+        required: true
+      tags:
+        - Authentication
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: >-
+                      username should not be null or undefined,username must be longer
+                      than or equal to 4 characters
+          description: Validation error
+      security:
+        - {}
+      summary: Signup
+      description: Saves the user in the database and returns a JWT token
+  /api/session/login:
+    summary: Authenticate a user
+    description: This endpoint allows users to authenticate themselves by providing their username and password.
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login_dto'
+              example:
+                username: testUserAlejandro51k
+                password: pass2pass2
+            examples:
+              admin:
+                value:
+                  username: testAdmin
+                  password: adminadmin
+              user_not_admin:
+                value:
+                  username: testUser
+                  password: testPass123
+        required: true
+      tags:
+        - Authentication
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: >-
+                      username should not be null or undefined,username must be longer
+                      than or equal to 4 characters
+          description: Validation Error
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Unauthorized
+          description: Unauthorized
+      security:
+        - {}
+      summary: Login
+      description: If the user exists and the password matches it will returns a JWT token
+  '/api/cart/checkout/{idCart}':
+    post:
+      tags:
+        - Carts
+      parameters:
+        -
+          name: idCart
+          description: Id of the cart
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Unauthorized
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Cart not found
+          description: Cart not found
+      security:
+        -
+          jwt: []
+      summary: Checkout cart
+      description: |-
+        It sends a e-mail to admin with the list of products in the cart.
+        It sends an sms and whatsapp to user confirming that the order is being processed.
+  '/api/product/{idProduct}':
+    get:
+      tags:
+        - Products
+      parameters:
+        -
+          name: idProduct
+          description: Id of the product
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/product_with_id_dto'
+          description: Successful response
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Product not found
+          description: Product not found
+      security:
+        - {}
+      summary: Get product by id
+      description: Retrieves products from database
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/product_dto'
+              example:
+                stock: 23
+                code: '5413992501045'
+                timestamp: '2022-11-06T14:40:01.553Z'
+                description: Monitor 277771'LG
+                title: Escuadra
+                category: Accessories
+                price: 822
+                thumbnail: >-
+                  https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png
+      tags:
+        - Products
+      parameters:
+        -
+          name: idProduct
+          description: Id of the product
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+        '400':
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error: code should not be null or undefined
+          description: validation_error
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Unauthorized
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Forbidden
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Product not found
+          description: Product Not Found
+      security:
+        -
+          jwt: []
+      summary: Modify product
+      description: Modify product
+    delete:
+      tags:
+        - Products
+      parameters:
+        -
+          name: idProduct
+          description: Id of the product
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Unauthorized
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                Forbidden:
+                  value:
+                    error: Forbidden
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Product not found
+          description: Product not found
+      security:
+        -
+          jwt: []
+      summary: Delete product by id
+      description: Delete product by id
+  '/api/cart/{idCart}':
+    delete:
+      tags:
+        - Carts
+      parameters:
+        -
+          name: idCart
+          description: Id of the cart
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Unauthorized
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Cart not found
+          description: Cart not found
+      security:
+        -
+          jwt: []
+      summary: Delete cart
+      description: Delete cart
+  '/api/cart/{idCart}/product':
+    get:
+      tags:
+        - Carts
+      parameters:
+        -
+          name: idCart
+          description: Id of the cart
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Unauthorized
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Cart not found
+          description: Cart not found
+      security:
+        -
+          jwt: []
+      summary: Get cart products
+      description: Get cart products
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_product_to_cart_dto'
+              example:
+                quantity: 99
+                id: 63836631d072110f1d49641c
+            examples:
+              example:
+                value:
+                  quantity: 99
+                  idProduct: 63836631d072110f1d49641c
+        required: true
+      tags:
+        - Carts
+      parameters:
+        -
+          name: idCart
+          description: Id of the cart
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 642038998fc0d288b423c23e
+                    timestamp: '2023-03-26T12:20:41.009Z'
+                    products:
+                      -
+                        id: 641f51e12057fdadc42b8693
+                        quantity: 99
+                        category: Accesories
+                        code: '4043218101081'
+                        description: Keyboard
+                        title: Keyboard
+                        price: 100
+                        thumbnail: >-
+                          https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png
+                        timestamp: '2023-03-25T19:56:17.540Z'
+                        timestampCart: '2023-03-26T12:20:41.009Z'
+          description: Successful response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Unauthorized
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Cart not found
+          description: Cart not found
+      security:
+        -
+          jwt: []
+      summary: Add product to cart
+      description: Add product to cart
+  '/api/cart/{idCart}/product/{idProduct}':
+    delete:
+      tags:
+        - Carts
+      parameters:
+        -
+          name: idCart
+          description: Id of the cart
+          schema:
+            type: string
+          in: path
+          required: true
+        -
+          name: idProduct
+          description: Id of the product
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Unauthorized
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Cart not found
+          description: Cart not found
+      security:
+        -
+          jwt: []
+      summary: Remove product from cart
+      description: Remove product from cart
+  /api/product:
+    get:
+      tags:
+        - Products
+      parameters:
+        -
+          name: category
+          description: Category
+          schema:
+            type: string
+          in: query
+          required: false
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: A list of products has been successfully retrieved.
+      security:
+        - {}
+      summary: Get products
+      description: Retrieves a list of products.
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/product_dto'
+              properties:
+                stock:
+                  description: The quantity of the product in stock.
+                  type: integer
+                code:
+                  description: The product's unique identifier code.
+                  type: string
+                description:
+                  description: A brief description of the product.
+                  type: string
+                title:
+                  description: The product's title.
+                  type: string
+                category:
+                  description: The product's category.
+                  type: string
+                price:
+                  description: The price of the product.
+                  type: integer
+                thumbnail:
+                  format: url
+                  description: The URL of the product's thumbnail image.
+                  type: string
+              example:
+                stock: 2121
+                code: '4043218101081'
+                description: Gamer Keyboard
+                title: Keyboard
+                category: Accessories
+                price: 100
+                thumbnail: >-
+                  https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png
+            examples:
+              keyboard:
+                value:
+                  stock: 2121
+                  code: '4043218101081'
+                  description: Keyboard
+                  category: Accesories
+                  title: Keyboarrd
+                  price: 100
+                  thumbnail: >-
+                    https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png
+        required: true
+      tags:
+        - Products
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product_with_id_dto'
+              examples:
+                example:
+                  value:
+                    id: 641ed9be5c36558dfef2edc0
+                    stock: 2121
+                    code: '4043218101081'
+                    description: Keyboard
+                    title: Keyboarrd
+                    price: 100
+                    thumbnail: >-
+                      https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png
+                    timestamp: '2023-03-25T11:23:42.779Z'
+                    category: Accesories
+          description: Product created
+        '400':
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error: code should not be null or undefined
+          description: Validation Error
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                unauthorized:
+                  value:
+                    error: Unauthorized
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Forbidden
+          description: Forbidden
+      security:
+        -
+          jwt: []
+      summary: Create product
+      description: Use this endpoint to create a new product in the inventory.
+  /api/cart:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                products: []
+        required: true
+      tags:
+        - Carts
+      responses:
+        '201':
+          content:
+            application/json:
+              examples:
+                example:
+                  value:
+                    id: 641f1ce7fff026b7258331cd
+                    timestamp: '2023-03-25T16:10:15.042Z'
+          description: Successful response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                example:
+                  value:
+                    error: Unauthorized
+          description: Unauthorized
+      security:
+        -
+          jwt: []
+      summary: Create cart
+      description: |-
+        Create cart
+        A cart is always created receiving an empty array of products. Please see the example.
+components:
+  schemas:
+    product_dto:
+      title: Root Type for product_creation_dto
+      description: ''
+      required:
+        - category
+        - code
+        - description
+        - price
+        - stock
+        - title
+      type: object
+      properties:
+        stock:
+          format: int32
+          description: The quantity of the product in stock.
+          minimum: 0
+          type: integer
+        code:
+          description: The product's unique identifier code.
+          type: string
+        description:
+          description: A brief description of the product.
+          type: string
+        category:
+          description: The product's category.
+          type: string
+        title:
+          description: The product's title.
+          type: string
+        price:
+          format: int32
+          description: The price of the product.
+          minimum: 0
+          type: integer
+        thumbnail:
+          description: The URL of the product's thumbnail image.
+          type: string
+      example:
+        stock: 2121
+        code: '4043218101081'
+        description: Keyboard
+        category: Accesories
+        title: Keyboarrd
+        price: 100
+        thumbnail: >-
+          https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png
+    error:
+      title: Root Type for error
+      description: ''
+      type: object
+      properties:
+        error:
+          type: string
+      example:
+        error: code should not be null or undefined
+    sign_up_dto:
+      title: Root Type for sign_up_dto
+      description: User Information
+      required:
+        - username
+        - phone
+        - password
+        - lastName
+        - firstName
+        - email
+        - age
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          minLength: 8
+          type: string
+        admin:
+          type: boolean
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        address:
+          type: string
+        age:
+          format: int32
+          type: integer
+        phone:
+          type: string
+        avatarURL:
+          type: string
+      example:
+        username: testAdmin
+        password: adminadmin
+        admin: true
+        email: emelie32@ethereal.email
+        firstName: Alex
+        lastName: Smith
+        address: Av Cabildo 1471 CABA
+        age: 54
+        phone: '+5491161818711'
+        avatarURL: 'https://picsum.photos/200'
+    login_dto:
+      title: Root Type for login_dto
+      description: ''
+      required:
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        username: testUser
+        password: testPass123
+    product_with_id_dto:
+      title: Root Type for product
+      description: The root object for representing a product.
+      type: object
+      properties:
+        id:
+          description: A unique identifier for the product.
+          type: string
+        stock:
+          format: int32
+          description: The current stock of the product.
+          type: integer
+        code:
+          description: The unique code for the product.
+          type: string
+        description:
+          description: A short description of the product.
+          type: string
+        category:
+          description: The category of the product.
+          type: string
+        title:
+          description: The title of the product.
+          type: string
+        price:
+          format: int32
+          description: The price of the product in cents.
+          type: integer
+        thumbnail:
+          description: The URL of the product's thumbnail image.
+          type: string
+      example:
+        id: 63836631d072110f1d496419
+        stock: 2121
+        code: '4043218101081'
+        description: Keyboard
+        category: Accessories
+        title: Keyboard
+        price: 100
+        thumbnail: >-
+          https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png
+    add_product_to_cart_dto:
+      title: Root Type for add_product_to_cart_dto
+      description: ''
+      type: object
+      properties:
+        quantity:
+          format: int32
+          type: integer
+        idProduct:
+          type: string
+      example:
+        quantity: 99
+        idProduct: 63836631d072110f1d49641c
+    add_product_response_dtp:
+      title: Root Type for add_product_response_dtp
+      description: ''
+      type: object
+      properties:
+        id:
+          description: Cart ID
+          type: string
+        timestamp:
+          format: date-time
+          description: Cart Creation Date
+          type: string
+        products:
+          description: Product
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              quantity:
+                format: int32
+                type: integer
+              category:
+                type: string
+              code:
+                type: string
+              description:
+                type: string
+              title:
+                type: string
+              price:
+                format: int32
+                type: integer
+              thumbnail:
+                type: string
+              timestamp:
+                format: date-time
+                type: string
+              timestampCart:
+                format: date-time
+                type: string
+      example:
+        id: 642038998fc0d288b423c23e
+        timestamp: '2023-03-26T12:20:41.009Z'
+        products:
+          -
+            id: 641f51e12057fdadc42b8693
+            quantity: 99
+            category: Accesories
+            code: '4043218101081'
+            description: Keyboard
+            title: Keyboard
+            price: 100
+            thumbnail: >-
+              https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png
+            timestamp: '2023-03-25T19:56:17.540Z'
+            timestampCart: '2023-03-26T12:20:41.009Z'
+  securitySchemes:
+    jwt:
+      scheme: bearer
+      type: http
+      description: JWT token
+tags:
+  -
+    name: Authentication
+    description: JWT Authentication Management
+  -
+    name: Products
+    description: Product Management
+  -
+    name: Carts
+    description: Cart Management

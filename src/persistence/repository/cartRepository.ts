@@ -38,6 +38,10 @@ export class CartRepository implements GenericRepository<CartDTO> {
         return (await this.dao.getAll()).map(x => CartDTO.from(x));
     }
 
+    async getAllByFilters(filters) {
+        return (await this.dao.getAllByFilters(filters)).map(x => CartDTO.from(x));
+    }
+
     async deleteById(id) {
         return CartDTO.from(await this.dao.deleteById(id));
     }
@@ -46,7 +50,7 @@ export class CartRepository implements GenericRepository<CartDTO> {
         const cart = await this.dao.getById(idCart);
         if (cart?.products) {
             const product = await ProductRepository.getInstance().getById(idProd);
-            UtilService.insertOrUpdateById(cart.products,ProductInCartDTO.toCartItemEntity(product, cart,quantity));
+            UtilService.insertOrUpdateById(cart.products, ProductInCartDTO.toCartItemEntity(product, cart, quantity));
         }
         return CartDTO.from(await this.dao.update(idCart, cart));
     }

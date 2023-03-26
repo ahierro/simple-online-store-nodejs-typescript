@@ -3,6 +3,7 @@ export class CartItemEntity {
     quantity: number;
     stock: number;
     code: string;
+    category: string;
     description: string;
     title: string;
     price: number;

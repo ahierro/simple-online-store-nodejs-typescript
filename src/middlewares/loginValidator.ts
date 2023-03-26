@@ -1,6 +1,7 @@
+import {checkAuth} from "../services/authService";
+
 const loginValidator = (req, res, next) => {
-    if(!req.isAuthenticated()) return res.status(401).json({msg: 'Unauthorized'});
-    next();
+    return checkAuth(req, res, next, false);
 };
 
 export default loginValidator;

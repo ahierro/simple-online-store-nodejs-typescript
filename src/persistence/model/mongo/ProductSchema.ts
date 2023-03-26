@@ -10,8 +10,9 @@ export const ProductSchema = new Schema<ProductEntity>(
         description: {type: String, required: true},
         title: {type: String, required: true},
         price: {type: Number, required: true},
-        thumbnail: {type: String, required: true},
+        thumbnail: {type: String, required: false},
         timestamp: {type: String, required: true},
+        category: {type: String, required: true},
     },
     {versionKey: false}
 );

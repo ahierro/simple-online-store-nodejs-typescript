@@ -6,11 +6,12 @@ interface IUser {
     password: string;
     admin: boolean;
     email: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     address: string;
     age: number;
     phone: string;
-    avatar: string;
+    avatarURL: string;
 }
 
 interface IUserMethods  {
@@ -23,11 +24,12 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    name: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     address: { type: String, required: false },
     age: { type: Number, required: true },
     phone: { type: String, required: true },
-    avatar: { type: String, required: false },
+    avatarURL: { type: String, required: false },
     admin: { type: Boolean, default: false },
 });
 

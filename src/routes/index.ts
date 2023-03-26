@@ -7,8 +7,8 @@ import routerCart from "./cart";
 
 const router = express.Router();
 
-router.use('/productos', routerProducts);
-router.use('/carrito', routerCart);
+router.use('/product', routerProducts);
+router.use('/cart', routerCart);
 router.use('/session', routerSession);
 
 export default router

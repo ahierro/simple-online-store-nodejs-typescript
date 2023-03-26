@@ -10,6 +10,8 @@ export interface GenericRepository<T extends EntityDTO> {
 
     getAll(): Promise<T[]>;
 
+    getAllByFilters(filters): Promise<T[]>;
+
     deleteById(id): Promise<T>;
 
 }

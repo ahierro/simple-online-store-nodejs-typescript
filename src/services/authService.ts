@@ -1,53 +1,48 @@
 import {UserModel} from "../persistence/model/mongo/UserModel";
-import {Strategy as LocalStrategy} from 'passport-local';
-import passport from 'passport';
+import jwt from 'jsonwebtoken';
+import Config from "../config/config";
 import log4js from "log4js";
-
 const logger = log4js.getLogger();
-const strategyOptions = {
-    usernameField: 'username',
-    passwordField: 'password',
-    passReqToCallback: true,
+
+export const generateAuthToken = (user) => {
+    const payload = {
+        userId: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        admin: user.admin || false
+    };
+
+    const token = jwt.sign(payload, Config.TOKEN_SECRET_KEY, {
+        expiresIn: '1h',
+    });
+    return token;
 };
 
-const signup = async (req, username, password, done) => {
-    logger.info('SIGNUP!',req?.body);
+// extracts a JTW token from the request header considering it is a Auth Bearer token
+export const extractToken = (req) => {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) return null;
+    return authHeader && authHeader.split(' ')[1];
+}
+
+export const checkAuth = async (req, res, next, checkAdmin) => {
+
+    const token = extractToken(req);
+
+    if (!token) return res.status(401).json({error: 'Unauthorized'});
+
     try {
-        const newUser = new UserModel({...req.body,username, password});
-        newUser.password = await newUser.encryptPassword(password);
-        await newUser.save();
-        return done(null, newUser);
-    } catch (error) {
-        if(error.code === 11000){
-            return done(null, false, { message: 'El usuario ya existe' });
-        }
-        logger.error(error);
-        return done(null, false, { message: 'Error inesperado' });
+        const decode = jwt.verify(
+            token,
+            Config.TOKEN_SECRET_KEY
+        );
+        const user = await UserModel.findById(decode.userId);
+        if (checkAdmin && !user.admin) return res.status(403).json({error: 'Forbidden'});
+        if (!user) return res.status(401).json({error: 'Unauthorized'});
+        req.user = user;
+        next();
+    } catch (err) {
+        logger.error(`Error:`,err);
+        return res.status(401).json({error: 'Unauthorized'});
     }
 };
-
-const login = async (req, username, password, done) => {
-    logger.info('BUSCANDO USUARIO...')
-    const user = await UserModel.findOne({username});
-    if (!user) {
-        return done(null, false, { message: 'User not found' });
-    } else {
-        const match = await user.matchPassword(password);
-        match ? done(null, user) : done(null, false);
-    }
-    logger.info('USUARIO ENCONTRADO!');
-};
-
-passport.serializeUser((user, done)=>{
-    logger.info('SERIALIZANDO USUARIO...');
-    done(null, user._id);
-});
-
-passport.deserializeUser( async(userId, done)=>{
-    logger.info('DESERIALIZANDO USUARIO...');
-    const user = await UserModel.findById(userId);
-    return done(null, user);
-});
-
-export const loginFunc = new LocalStrategy(strategyOptions, login);
-export const signUpFunc = new LocalStrategy(strategyOptions, signup);

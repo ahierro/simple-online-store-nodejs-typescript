@@ -11,8 +11,10 @@ export class SignUpDTO {
     @IsDefined()
     email: string;
     @IsDefined()
-    name: string;
-    address: string;
+    firstName: string;
+    @IsDefined()
+    lastName: string;
+    admin: boolean = false
     @Min(18)
     @Max(120)
     @IsDefined()
@@ -21,5 +23,6 @@ export class SignUpDTO {
     @IsPhoneNumber()
     phone: string;
     @IsUrl()
-    avatar: string;
+    avatarURL: string;
+    address: string;
 }
