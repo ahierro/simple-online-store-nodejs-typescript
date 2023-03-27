@@ -22,7 +22,7 @@ export default {
     ETHEREAL_HOST: process.env.ETHEREAL_HOST,
     SECRET_MONGO: process.env.SECRET_MONGO,
     SECRET_SESSION: process.env.SECRET_SESSION,
-    SESSION_MAX_AGE: +process.env.SESSION_MAX_AGE,
+    SESSION_MAX_AGE: process.env.SESSION_MAX_AGE,
     FACTORY: process.env.FACTORY,
     TOKEN_SECRET_KEY: process.env.TOKEN_SECRET_KEY || 'secret',
 }

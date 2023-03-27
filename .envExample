@@ -1,7 +1,7 @@
 MONGO_SRV=mongodb://crud-admin:superPass123@localhost:27017/ecommerce?authMechanism=DEFAULT
 SECRET_MONGO=squirrel
 SECRET_SESSION=s3cr3ts2cr3t
-SESSION_MAX_AGE=60000
+SESSION_MAX_AGE=1h
 ETHEREAL_PORT=587
 ETHEREAL_EMAIL=asia.veum@ethereal.email
 ETHEREAL_PASSWORD=ErbfSVtktrWrHhxwq6

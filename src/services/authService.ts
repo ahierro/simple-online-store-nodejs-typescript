@@ -1,7 +1,9 @@
 import {UserModel} from "../persistence/model/mongo/UserModel";
 import jwt from 'jsonwebtoken';
 import Config from "../config/config";
+import config from "../config/config";
 import log4js from "log4js";
+
 const logger = log4js.getLogger();
 
 export const generateAuthToken = (user) => {
@@ -11,11 +13,10 @@ export const generateAuthToken = (user) => {
         lastName: user.lastName,
         admin: user.admin || false
     };
-
-    const token = jwt.sign(payload, Config.TOKEN_SECRET_KEY, {
-        expiresIn: '1h',
+    console.log('config.SESSION_MAX_AGE', config.SESSION_MAX_AGE);
+    return jwt.sign(payload, Config.TOKEN_SECRET_KEY, {
+        expiresIn: config.SESSION_MAX_AGE,
     });
-    return token;
 };
 
 // extracts a JTW token from the request header considering it is a Auth Bearer token
