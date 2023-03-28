@@ -6,19 +6,22 @@ import {header} from "../templates/mail/header";
 import {rowsGenerate} from "../templates/mail/rows";
 import {footer} from "../templates/mail/footer";
 import {CartService} from "../services/cartService";
+import {GenericDAO} from "../persistence/dao/genericDAO";
+import {OrderEntity} from "../persistence/model/mongo/OrderEntity";
+import {orderDAO} from "../persistence/dao/factoryDAO";
 
 export class CartAPI {
     private static instance: CartAPI;
 
     static getInstance(): CartAPI {
         if (!this.instance) {
-            CartAPI.instance = new CartAPI();
+            CartAPI.instance = new CartAPI(orderDAO());
         }
 
         return CartAPI.instance;
     }
 
-    private constructor() {
+    private constructor(private orderDao: GenericDAO<OrderEntity>) {
     }
 
     async create(requestBody) {
@@ -45,16 +48,32 @@ export class CartAPI {
     async checkout(id, user) {
         const cart = (await CartService.getInstance().getById(id));
         if (cart) {
-            const rows = cart.products.map(p => {
-                return rowsGenerate(p);
-            }).join("");
+            await this.createOrder(user, cart);
+
+            const subject = `New order from ${user.username}  ${user.email} `;
+
+            await this.sendMailToAdmin(cart, subject);
             // @ts-ignore
-            const subject = `nuevo pedido de ${user.username}  ${user.email} `;
-            await sendMail(subject, header + rows + footer);
-            // @ts-ignore
-            await sendSms(user.phone, "Su pedido ha sido recibido y se encuentra en proceso");
+            await sendSms(user.phone, "Your order is being processed");
             // @ts-ignore
             await sendWhatsapp(user.phone, subject);
         }
+    }
+
+    private async sendMailToAdmin(cart: CartDTO, subject) {
+        const rows = cart.products.map(p => {
+            return rowsGenerate(p);
+        }).join("");
+        // @ts-ignore
+        await sendMail(subject, header + rows + footer);
+    }
+
+    private async createOrder(user, cart: CartDTO) {
+        const orderEntity = new OrderEntity();
+        orderEntity.email = user.email;
+        orderEntity.items = cart.products;
+        orderEntity.status = "generated";
+        orderEntity.timestamp = new Date().toISOString();
+        await this.orderDao.insert(orderEntity);
     }
 }
