@@ -75,3 +75,8 @@ TWILIO_WHATSAPP_FROM=whatsapp:+14...
 # Chat Messages
 Go to http://localhost:8080/ and you will find a chat module that was implemented using socket.io
 ![chat](/chat.JPG "Chat Messages")
+
+# Configuration
+Go to http://localhost:8080/api/info and you will find an html implemented using EJS that shows the current configuration of the server
+
+![configuration](/configuration.JPG "configuration")
