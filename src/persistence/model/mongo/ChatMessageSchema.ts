@@ -9,6 +9,7 @@ export const ChatMessageSchema = new Schema<ChatMessageEntity>(
         content: {type: String, required: true},
         timestamp: {type: String, required: true},
         type: {type: String, required: true},
+        room: {type: String, required: true},
     },
     {versionKey: false}
 );

@@ -42,6 +42,7 @@ export const signup = async (req, res) => {
         if (user) return res.status(400).json({error: 'User already exists'});
 
         const newUser = new UserModel({...signUpDTO});
+        newUser.timestamp = new Date().toISOString();
         newUser.password = await newUser.encryptPassword(signUpDTO.password);
         await newUser.save();
         const token = generateAuthToken(newUser);

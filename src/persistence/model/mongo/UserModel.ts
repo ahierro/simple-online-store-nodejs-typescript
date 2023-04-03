@@ -12,6 +12,7 @@ interface IUser {
     age: number;
     phone: string;
     avatarURL: string;
+    timestamp: string;
 }
 
 interface IUserMethods  {
@@ -31,6 +32,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
     phone: { type: String, required: true },
     avatarURL: { type: String, required: false },
     admin: { type: Boolean, default: false },
+    timestamp: {type: String, required: true},
 });
 
 userSchema.method('encryptPassword', async password => {

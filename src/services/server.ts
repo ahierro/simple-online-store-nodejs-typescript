@@ -40,9 +40,7 @@ app.use((req, res, next) => {
 })
 app.use(express.urlencoded({ extended: true }));
 app.use('/api', mainRouter);
-app.get('/', async (req, res) => {
-    res.render('chat',{});
-});
+// 0
 app.use(express.static('public'));
 
 app.set('view engine', 'ejs');

@@ -4,4 +4,5 @@ export class ChatMessageEntity {
     content: string;
     timestamp: string;
     type: string;
+    room: string;
 }

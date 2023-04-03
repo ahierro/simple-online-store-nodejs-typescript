@@ -14,6 +14,9 @@ export class ChatMessageDTO implements EntityDTO{
     @IsDefined()
     @Length(1, 100)
     type: string;
+    @Length(1, 100)
+    @IsDefined()
+    room: string;
     timestamp: string;
 
     static from(data: ChatMessageEntity) : ChatMessageDTO {
@@ -21,6 +24,7 @@ export class ChatMessageDTO implements EntityDTO{
         product.id = data._id;
         product.content = data.content;
         product.mail = data.mail;
+        product.room = data.room;
         product.timestamp = data.timestamp;
         product.type = data.type;
         return product;
@@ -33,6 +37,7 @@ export class ChatMessageDTO implements EntityDTO{
         product.timestamp = data.timestamp;
         product.type = data.type;
         product.mail = data.mail;
+        product.room = data.room;
         return product;
     }
 }

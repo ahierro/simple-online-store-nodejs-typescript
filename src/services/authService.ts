@@ -13,7 +13,6 @@ export const generateAuthToken = (user) => {
         lastName: user.lastName,
         admin: user.admin || false
     };
-    console.log('config.SESSION_MAX_AGE', config.SESSION_MAX_AGE);
     return jwt.sign(payload, Config.TOKEN_SECRET_KEY, {
         expiresIn: config.SESSION_MAX_AGE,
     });
@@ -33,11 +32,7 @@ export const checkAuth = async (req, res, next, checkAdmin) => {
     if (!token) return res.status(401).json({error: 'Unauthorized'});
 
     try {
-        const decode = jwt.verify(
-            token,
-            Config.TOKEN_SECRET_KEY
-        );
-        const user = await UserModel.findById(decode.userId);
+        const user = await getUserFromToken(token);
         if (checkAdmin && !user.admin) return res.status(403).json({error: 'Forbidden'});
         if (!user) return res.status(401).json({error: 'Unauthorized'});
         req.user = user;
@@ -47,3 +42,11 @@ export const checkAuth = async (req, res, next, checkAdmin) => {
         return res.status(401).json({error: 'Unauthorized'});
     }
 };
+
+export const getUserFromToken = async (token) => {
+    const decode = jwt.verify(
+        token,
+        Config.TOKEN_SECRET_KEY
+    );
+    return UserModel.findById(decode.userId);
+}

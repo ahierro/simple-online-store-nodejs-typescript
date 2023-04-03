@@ -37,4 +37,8 @@ export class GenericService<T extends EntityDTO> {
         return await this.repository.deleteById(id);
     }
 
+    async getAllByFilters(filters): Promise<T[]>{
+        return await this.repository.getAllByFilters(filters);
+    }
+
 }

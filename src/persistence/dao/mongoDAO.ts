@@ -26,11 +26,11 @@ export class MongoDAO<T> implements GenericDAO<T>{
     }
 
     async getAll() {
-        return this.collection.find();
+        return this.collection.find().sort({timestamp: 1});
     }
 
     async getAllByFilters(filters): Promise<T[]>{
-        return this.collection.find(filters);
+        return this.collection.find(filters).sort({timestamp: 1});
     }
 
     async deleteById(id) {

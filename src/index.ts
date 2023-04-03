@@ -10,7 +10,7 @@ const init = async () => {
     await connectDb();
     initWsServer(app);
     const server = app.listen(Config.PORT, () => {
-        logger.info(`PID:${process.pid} Servidor http escuchando en el puerto ${server.address().port}`);
+        logger.info(`PID:${process.pid} Servidor http escuchando en http:\/\/localhost:${server.address().port}`);
     });
 
     server.on('error', (err) => {
